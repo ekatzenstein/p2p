@@ -11,15 +11,16 @@ Hackweek project. Dataframes to React.
 1. Start the stack.
 
    ```bash
-   docker-compose build
-   docker-compose up -d
+   make
    ```
 
 1. View the stack.
 
-   | App        | URL                    |
-   | ---------- | ---------------------- |
-   | Swagger UI | http://localhost:8080/ |
+   | App         | URL                    |
+   | ----------- | ---------------------- |
+   | Frontend    | http://localhost/      |
+   | Backend API | http://localhost/api/  |
+   | Swagger UI  | http://localhost:8080/ |
 
 ## Minio
 
