@@ -11,12 +11,36 @@ schemes:
   - "http"
 
 paths:
-  /page/{pageId}:
+  /site/{siteId}/page/:
+    get:
+      tags:
+        - "page"
+      operationId: "listPagesBySite"
+      parameters:
+        - name: "siteId"
+          in: "path"
+          description: "Site ID"
+          required: true
+          type: "string"
+      responses:
+        200:
+          description: ""
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/Page"
+
+  /site/{siteId}/page/{pageId}:
     get:
       tags:
         - "page"
       operationId: "getPage"
       parameters:
+        - name: "siteId"
+          in: "path"
+          description: "Site ID"
+          required: true
+          type: "string"
         - name: "pageId"
           in: "path"
           description: "Page ID"
@@ -33,17 +57,13 @@ paths:
       tags:
         - "site"
       operationId: "listSites"
-      parameters:
-        - name: "pageId"
-          in: "path"
-          description: "Page ID"
-          required: true
-          type: "string"
       responses:
         200:
           description: ""
           schema:
-            $ref: "#/definitions/Site"
+            type: "array"
+            items:
+              $ref: "#/definitions/Site"
 
   /site/{siteId}:
     get:
