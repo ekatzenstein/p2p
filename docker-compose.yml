@@ -35,3 +35,18 @@ services:
         aliases:
           - "compose-proxy"
     restart: always
+
+  minio1:
+    image: minio/minio:RELEASE.2019-01-16T21-44-08Z
+    volumes:
+      - ./data:/data
+    ports:
+     - "9000:9000"
+    networks:
+      default:
+        aliases:
+          - "compose-minio"
+    environment:
+     MINIO_ACCESS_KEY: minio
+     MINIO_SECRET_KEY: minio123
+    command: server /data
