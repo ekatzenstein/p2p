@@ -1,11 +1,13 @@
-FROM node:10-alpine as base
-WORKDIR /usr/src/app
+FROM python:3.6-alpine
 
-#COPY package*.json ./
-#RUN npm install
+ENV LANG C.UTF-8
+ENV LC_ALL C.UTF-8
 
-#COPY . .
+COPY requirements.txt .
 
-#EXPOSE 3000
+RUN pip install -r requirements.txt
 
-#CMD ["npm", "start"]
+COPY . .
+
+EXPOSE 5000
+CMD ["python", "app.py"]
