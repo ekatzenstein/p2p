@@ -8,21 +8,20 @@ host: "localhost"
 basePath: "/api"
 
 schemes:
-- "https"
-- "http"
+  - "http"
 
 paths:
   /page/{pageId}:
     get:
       tags:
-      - "page"
+        - "page"
       operationId: "getPage"
       parameters:
-      - name: "pageId"
-        in: "path"
-        description: "Page ID"
-        required: true
-        type: "string"
+        - name: "pageId"
+          in: "path"
+          description: "Page ID"
+          required: true
+          type: "string"
       responses:
         200:
           description: ""
@@ -32,14 +31,14 @@ paths:
   /site/:
     get:
       tags:
-      - "site"
+        - "site"
       operationId: "listSites"
       parameters:
-      - name: "pageId"
-        in: "path"
-        description: "Page ID"
-        required: true
-        type: "string"
+        - name: "pageId"
+          in: "path"
+          description: "Page ID"
+          required: true
+          type: "string"
       responses:
         200:
           description: ""
@@ -49,14 +48,14 @@ paths:
   /site/{siteId}:
     get:
       tags:
-      - "site"
+        - "site"
       operationId: "getSite"
       parameters:
-      - name: "siteId"
-        in: "path"
-        description: "Site ID"
-        required: true
-        type: "string"
+        - name: "siteId"
+          in: "path"
+          description: "Site ID"
+          required: true
+          type: "string"
       responses:
         200:
           description: ""
@@ -66,14 +65,14 @@ paths:
   /dataframe/{dataframeId}:
     get:
       tags:
-      - "dataframe"
+        - "dataframe"
       operationId: "getDataframe"
       parameters:
-      - name: "dataframeId"
-        in: "path"
-        description: "Dataframe ID"
-        required: true
-        type: "string"
+        - name: "dataframeId"
+          in: "path"
+          description: "Dataframe ID"
+          required: true
+          type: "string"
       responses:
         200:
           description: ""
@@ -93,7 +92,7 @@ definitions:
         type: "object" # TBD
       site_id:
         type: "string"
-  
+
   Site:
     type: "object"
     properties:
@@ -104,7 +103,7 @@ definitions:
         example: "client-abc-weekly-report"
       default_page_id:
         type: "string"
-  
+
   Dataframe:
     type: "object"
     properties:
