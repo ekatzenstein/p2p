@@ -61,8 +61,6 @@ services:
       - "./components/backend/swagger.yml:/swagger.yml:ro"
     environment:
       SWAGGER_JSON: /swagger.yml
-    ports:
-      - "8080:8080"
     networks:
       default:
         aliases:
