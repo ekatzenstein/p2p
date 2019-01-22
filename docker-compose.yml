@@ -1,0 +1,37 @@
+version: "3.4"
+
+services:
+  frontend:
+    container_name: frontend
+    build: ./components/frontend
+    networks:
+      default:
+        aliases:
+          - "compose-p2p-frontend"
+
+  backend:
+    container_name: backend
+    build: ./components/backend
+    networks:
+      default:
+        aliases:
+          - "compose-p2p-backend"
+
+  postgres:
+    container_name: postgres
+    image: postgres:9.6-alpine
+    networks:
+      default:
+        aliases:
+          - "compose-postgres"
+
+  proxy:
+    container_name: proxy
+    build: ./components/proxy
+    ports:
+      - "80:80"
+    networks:
+      default:
+        aliases:
+          - "compose-proxy"
+    restart: always
