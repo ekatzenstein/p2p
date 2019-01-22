@@ -11,10 +11,10 @@ schemes:
   - "http"
 
 paths:
-  /site/{siteId}/page/:
+  /sites/{siteId}/pages/:
     get:
       tags:
-        - "page"
+        - "pages"
       operationId: "listPagesBySite"
       parameters:
         - name: "siteId"
@@ -30,10 +30,10 @@ paths:
             items:
               $ref: "#/definitions/Page"
 
-  /site/{siteId}/page/{pageId}:
+  /sites/{siteId}/pages/{pageId}:
     get:
       tags:
-        - "page"
+        - "pages"
       operationId: "getPage"
       parameters:
         - name: "siteId"
@@ -52,10 +52,10 @@ paths:
           schema:
             $ref: "#/definitions/Page"
 
-  /site/:
+  /sites/:
     get:
       tags:
-        - "site"
+        - "sites"
       operationId: "listSites"
       responses:
         200:
@@ -65,10 +65,10 @@ paths:
             items:
               $ref: "#/definitions/Site"
 
-  /site/{siteId}:
+  /sites/{siteId}:
     get:
       tags:
-        - "site"
+        - "sites"
       operationId: "getSite"
       parameters:
         - name: "siteId"
@@ -82,10 +82,10 @@ paths:
           schema:
             $ref: "#/definitions/Site"
 
-  /dataframe/{dataframeId}:
+  /dataframes/{dataframeId}:
     get:
       tags:
-        - "dataframe"
+        - "dataframes"
       operationId: "getDataframe"
       parameters:
         - name: "dataframeId"

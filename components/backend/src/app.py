@@ -5,8 +5,8 @@ from blueprints import (dataframe, site)
 
 def build_app():
     app = Flask(__name__)
-    app.register_blueprint(dataframe.DATAFRAME, url_prefix='/dataframe')
-    app.register_blueprint(site.SITE, url_prefix='/site')
+    app.register_blueprint(dataframe.DATAFRAME, url_prefix='/dataframes')
+    app.register_blueprint(site.SITE, url_prefix='/sites')
     return app
 
 
