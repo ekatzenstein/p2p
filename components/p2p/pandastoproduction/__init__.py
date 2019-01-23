@@ -1,5 +1,2 @@
-
-def publish(stuff):
-    print("Publishing...")
-    print(stuff)
-    print("Done!")
+from pandastoproduction.publish import publish
+from pandastoproduction.models import *
