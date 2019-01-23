@@ -2,12 +2,12 @@
 
 A completely working example of how to leverage any react component inside a Jupyter NbExtension using [Jupyter-React](https://github.com/timbr-io/jupyter-react) and [Jupyter-React-JS](https://github.com/timbr-io/jupyter-react-js).
 
-## Installing
+## Running
 
 ```
-git clone git@github.com:timbr-io/jupyter-react-example.git
+npm install
+npm run copy
 cd jupyter-react-example && python setup.py develop
-node dev-copy
 jupyter notebook
 ```
 

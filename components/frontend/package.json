@@ -1,0 +1,19 @@
+{
+  "name": "p2p",
+  "version": "1.0.0",
+  "description": "Hackweek project. Dataframes to React.",
+  "main": "index.js",
+  "scripts": {
+    "copy": "node scripts/copy",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@git.enigma:hackweek/pandas-to-production/p2p.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "ncp": "^2.0.0"
+  }
+}
