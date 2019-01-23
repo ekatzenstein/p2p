@@ -35,8 +35,8 @@ class SiteSchema(Schema):
 
 class DataframeSchema(Schema):
     id = field.Int(attribute='id_', dump_only=True)
-    digest = field.Str()
-    url = field.Str()
+    digest = field.Str(dump_only=True)
+    url = field.Str(dump_only=True)
 
     # pylint: disable=too-few-public-methods
     class Meta:

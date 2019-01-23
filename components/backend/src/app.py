@@ -9,6 +9,11 @@ def build_app():
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
     # TODO: Connect to actual DB through variables
     app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:////tmp/test.db'
+    # TODO: externalize these parameters
+    app.config['UPLOAD_DIRECTORY'] = '/tmp'
+    app.config['MINIO_ENDPOINT'] = 'compose-minio:9000'
+    app.config['MINIO_ACCESS_KEY'] = 'minio'
+    app.config['MINIO_SECRET_KEY'] = 'minio123'
 
     app.register_blueprint(dataframe.DATAFRAME, url_prefix='/dataframes')
     app.register_blueprint(site.SITE, url_prefix='/sites')
@@ -26,3 +31,4 @@ if __name__ == "__main__":
         db.create_all()
 
     app.run(debug=True, host='0.0.0.0')
+
