@@ -49,14 +49,14 @@ def get_pages(site_id):
 
 
 @SITE.route('/<int:site_id>/pages/', methods=['POST'])
-@marshal_with(PageSchema(many=False), 201)
+@marshal_with(PageSchema(many=False), 200)
 @use_kwargs(PageSchema(), locations=('json',))
 def create_page(site_id, **kwargs):
     site = db.session.query(Site).get(site_id)
-    new_page = Page(title='a title', content='some content', site_id=site_id)
+    new_page = Page(title=kwargs.get('title'), content=kwargs.get('content'), site_id=site_id)
     site.pages.append(new_page)
     db.session.commit()
-    return new_page.title
+    return new_page
 
 
 @SITE.route('/<int:site_id>/pages/<int:page_id>', methods=['GET'])
