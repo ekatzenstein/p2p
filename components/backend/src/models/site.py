@@ -1,17 +1,17 @@
 """Site model."""
 from datetime import datetime
 
-from .models import db, sortable
+from .models import db, APIModel, sortable
 
-@sortable('created_at', 'name')
-class Site(db.Model):
-    """Representation of a Tag."""
+@sortable('name')
+class Site(APIModel):
+    """Representation of a Site."""
 
-    __bind_key__ = 'metadata'
     __tablename__ = 'site'
 
-    id_ = db.Column('id', db.Integer, nullable=False, unique=True, primary_key=True, autoincrement=True)
-    created_at = db.Column(db.DateTime, default=datetime.utcnow)
-    name = db.Column(db.String, nullable=False, unique=True)
+    id_ = db.Column('id', db.Integer, primary_key=True)
+    name = db.Column(db.String)
     slug = db.Column(db.String)
-    default_page_id = db.Column(db.String)
+    default_page_id = db.Column(db.String, nullable=True)
+    pages = db.relationship('Page', backref='page',
+                               order_by='Page.title')
