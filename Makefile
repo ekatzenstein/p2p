@@ -3,6 +3,10 @@ SHELL := /bin/bash
 
 COMPONENTS ?= 
 
+P2P_DIST_DIR := dist/
+P2P_BUILDER_IMAGE := pandastoproduction-builder:latest
+P2P_WHL := $(P2P_DIST_DIR)/pandastoproduction-0.1.0-py3-none-any.whl
+
 .PHONY: help
 help: ## Display makefile target descriptions.
 	@printf -- "\nPandas to Production.\n\n"
@@ -19,3 +23,15 @@ compose-up: ## Start the docker-compose stack.
 .PHONY: compose-down
 compose-down: ## Stop the docker-compose stack.
 	docker-compose down --remove-orphans --volumes
+
+
+.PHONY: build-whl
+build-whl: ## Build the p2p library.
+	@printf -- "Building wheel: $(P2P_WHL)\n"
+	docker build -f components/p2p/Dockerfile -t $(P2P_BUILDER_IMAGE) components/p2p
+	docker run --rm -v $(PWD)/dist:/dist $(P2P_BUILDER_IMAGE)
+
+
+.PHONY: clean
+clean: ## Remove temporary directories.
+	-rm -rf dist data
