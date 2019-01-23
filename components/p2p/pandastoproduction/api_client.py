@@ -1,37 +1,59 @@
-import json
 import requests
 
 from pandastoproduction.models import DataFrame, Site, Page
-
-
-class SimpleEncoder(json.JSONEncoder):
-    def default(self, o):  # pylint: disable=E0202
-        return o.__dict__
 
 
 class ApiClient(object):
     """API Client"""
 
     def __init__(self, api_base_url: str):
-        self._api_base_url = api_base_url
+        self._api_base_url = api_base_url.rstrip('/')
 
     def _request(self, method: str, path: str, **kwargs):
-        url = f'{self._api_base_url}/{path}'
+        url = '{}/{}'.format(
+            self._api_base_url,
+            path.lstrip('/')
+        )
         resp = requests.request(
             method,
             url,
             **kwargs,
         )
+        print('Request:')
+        print(method + ' ' + url)
+        print(resp.request.body.decode('utf-8'))
+        print('Response:')
+        print(resp.content.decode('utf-8'))
         return resp
 
     def create_page(self, page: Page):
         site_id = page.site_id
-        self._request('POST', f'/sites/{site_id}/pages/', json=json.dumps(page, cls=SimpleEncoder))
+        if site_id is None:
+            raise ValueError('Page site_id is missing.')
+        resp = self._request('POST', f'/sites/{site_id}/pages/', json=page.to_json())
+        page.id = resp.json()['id']
 
     def create_site(self, site: Site):
-        self._request('POST', '/sites/', json=json.dumps(site, cls=SimpleEncoder))
+        resp = self._request('POST', '/sites/', json=site.to_json())
+        site.id = resp.json()['id']
 
     def create_dataframe(self, dataframe: DataFrame):
-        df_resp = self._request('POST', '/dataframes/', json=json.dumps(dataframe, cls=SimpleEncoder))
-        dataframe_id = df_resp.json()['id']
-        self._request('POST', f'/dataframes/{dataframe_id}', json=dataframe.df)
+        pass  # TODO
+
+    def update_page(self, page: Page):
+        pass  # TODO
+
+    def update_site(self, site: Site):
+        pass  # TODO
+
+    def update_dataframe(self, dataframe: DataFrame):
+        pass  # TODO
+
+    def create_or_update_page(self, page: Page):
+        pass  # TODO
+
+    def create_or_update_site(self, site: Site):
+        pass  # TODO
+
+    def create_or_update_dataframe(self, dataframe: DataFrame):
+        pass  # TODO

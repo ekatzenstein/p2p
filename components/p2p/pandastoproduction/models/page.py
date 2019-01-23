@@ -1,6 +1,12 @@
+import json
 from typing import List, Union
 
 from pandastoproduction.validate import validate_type, validate_type_list
+
+
+class SimpleEncoder(json.JSONEncoder):
+    def default(self, o):  # pylint: disable=E0202
+        return o.__dict__
 
 
 class PageContent(object):
@@ -95,5 +101,27 @@ class Page(object):
             validate_type('content', content, PageContent)
             self._content.append(content)
 
+    @property
+    def id(self):
+        return self._id
+
+    @id.setter
+    def id(self, id):
+        validate_type('id', id, int)
+        self._id = id
+
     def __str__(self):
-        return f'Page: title="{self._title}" content={self._content} site_id={self._site_id}'
+        return f'Page: title="{self._title}" content={self._content} site_id={self._site_id} id={self._id}'
+
+    def to_json(self):
+        obj = {
+            'id': self._id,
+            'title': self._title,
+            'site_id': self._site_id,
+            'content': json.dumps(self._content, cls=SimpleEncoder),
+        }
+        data = {}
+        for key in obj:
+            if obj[key] is not None:
+                data[key] = obj[key]
+        return data

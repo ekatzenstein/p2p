@@ -2,7 +2,7 @@
 
 import pandastoproduction as p2p
 
-site = p2p.Site(slug='example-site')
+site = p2p.Site(name='Example Site', slug='example-site')
 
 s1 = p2p.Scatterplot()
 p1 = p2p.Paragraph('This scatterplot shows an interesting trend...')
@@ -22,4 +22,4 @@ page2 = p2p.Page('Page 2 Title', content=[h1, p2, b1, p2])
 
 # TODO include parameters to charts, dataframes, etc
 
-p2p.publish(pages=[page1, page2], sites=[site])
+p2p.publish(sites=[site])
