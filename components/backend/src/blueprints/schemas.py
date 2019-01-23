@@ -24,7 +24,7 @@ class SiteSchema(Schema):
     name = field.Str()
     slug = field.Str()
     default_page_id = field.Str(required=False)
-    pages = field.Nested(PageSchema, dump_only=True)
+    pages = field.Nested(PageSchema, many=True, dump_only=True)
 
     # pylint: disable=too-few-public-methods
     class Meta:

@@ -22,38 +22,6 @@ class APIModel(db.Model):
             return table_name[:-1]
         return table_name
 
-    def meta(self):
-        """Return a dict of meta information about the resource.
-
-        This information can not be represented as an attribute or relationship. Commonly used
-        for contextual information related to a search query.
-        """
-        return getattr(self, 'meta_dict', None)
-
-    def load_meta(self, key, value):
-        """Load meta information for this Dataset, which will be serialized in the `meta` dict under the given key."""
-        # pylint: disable=attribute-defined-outside-init
-        self.meta_dict = meta = getattr(self, 'meta_dict', {})
-        meta[key] = value
-
-    @classmethod
-    def require_by_id(cls, id_):
-        """Retrieve the resource with the primary key *id_*.
-
-        :param id_: The primary key identifier for the resource
-        """
-        type_detail = {'type': cls.__name__.lower()}
-        if isinstance(cls.id_.type, UUIDType):
-            if not isinstance(id_, uuid.UUID):
-                try:
-                    id_ = uuid.UUID(id_)
-                except (TypeError, ValueError):
-                    raise APIError('resource_not_found', detail=type_detail)
-        resource = cls.query.get(id_)
-        if resource is None:
-            raise APIError('resource_not_found', detail=type_detail)
-        return resource
-
 
 def sortable(*args):
     """Return a decorator for adding sort_query() to an APIModel."""
