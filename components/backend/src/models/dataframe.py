@@ -8,5 +8,5 @@ class Dataframe(APIModel):
     __tablename__ = 'dataframe'
 
     id_ = db.Column('id', db.Integer, primary_key=True)
-    digest = db.Column(db.String, nullable=False)
-    url = db.Column(db.String, nullable=False)
+    digest = db.Column(db.String)
+    url = db.Column(db.String)

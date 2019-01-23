@@ -7,6 +7,7 @@ from minio import Minio
 
 from models import db, Dataframe
 from .schemas import DataframeSchema
+from utils import hexdigest
 
 DATAFRAME = Blueprint('dataframe', __name__)
 
@@ -20,9 +21,8 @@ def get_dataframes():
 @DATAFRAME.route('/', methods=['POST'])
 @use_kwargs(DataframeSchema(), locations=('json',))
 @marshal_with(DataframeSchema(many=False), 200)
-def create_dataframe(digest, url):
-    # TODO: How are we actually uploading dataframes? multipart csv upload?
-    new_dataframe = Dataframe(digest=digest, url=url)
+def create_dataframe():
+    new_dataframe = Dataframe()
     db.session.add(new_dataframe)
     db.session.commit()
     return new_dataframe
@@ -59,11 +59,13 @@ def create_dataframe_content(dataframe_id):
                             access_key=current_app.config['MINIO_ACCESS_KEY'],
                             secret_key=current_app.config['MINIO_SECRET_KEY'],
                             secure=False)
-        etag = minioClient.fput_object('dataframes', f'dataframe_{dataframe_id}.csv', full_filepath)
-        os.remove(full_filepath)
+        minioClient.fput_object('dataframes', f'dataframe_{dataframe_id}.csv', full_filepath)
 
         dataframe.url = f"http://{current_app.config['MINIO_ENDPOINT']}/dataframes/{filename}"
+        dataframe.digest = hexdigest(full_filepath)
         db.session.commit()
+
+        os.remove(full_filepath)
 
         return '', 204, {'content-length': 0}
 
