@@ -15,7 +15,7 @@ paths:
     get:
       tags:
         - "pages"
-      operationId: "listPagesBySite"
+      operationId: "listPages"
       parameters:
         - name: "siteId"
           in: "path"
@@ -29,6 +29,22 @@ paths:
             type: "array"
             items:
               $ref: "#/definitions/Page"
+    post:
+      tags:
+        - "pages"
+      operationId: "createPage"
+      parameters:
+        - in: "body"
+          name: "body"
+          description: ""
+          required: true
+          schema:
+            $ref: "#/definitions/Page"
+      responses:
+        200:
+          description: ""
+          schema:
+            $ref: "#/definitions/Page"
 
   /sites/{siteId}/pages/{pageId}:
     get:
@@ -51,6 +67,24 @@ paths:
           description: ""
           schema:
             $ref: "#/definitions/Page"
+    delete:
+      tags:
+        - "pages"
+      operationId: "deletePage"
+      parameters:
+        - name: "siteId"
+          in: "path"
+          description: "Site ID"
+          required: true
+          type: "string"
+        - name: "pageId"
+          in: "path"
+          description: "Page ID"
+          required: true
+          type: "string"
+      responses:
+        204:
+          description: ""
 
   /sites/:
     get:
@@ -64,6 +98,22 @@ paths:
             type: "array"
             items:
               $ref: "#/definitions/Site"
+    post:
+      tags:
+        - "sites"
+      operationId: "createSite"
+      parameters:
+        - in: "body"
+          name: "body"
+          description: ""
+          required: true
+          schema:
+            $ref: "#/definitions/Site"
+      responses:
+        200:
+          description: ""
+          schema:
+            $ref: "#/definitions/Site"
 
   /sites/{siteId}:
     get:
@@ -81,6 +131,19 @@ paths:
           description: ""
           schema:
             $ref: "#/definitions/Site"
+    delete:
+      tags:
+        - "sites"
+      operationId: "deleteSite"
+      parameters:
+        - name: "siteId"
+          in: "path"
+          description: "Site ID"
+          required: true
+          type: "string"
+      responses:
+        204:
+          description: ""
 
   /dataframes/{dataframeId}:
     get:
@@ -98,6 +161,35 @@ paths:
           description: ""
           schema:
             $ref: "#/definitions/Dataframe"
+    post:
+      tags:
+        - "dataframes"
+      operationId: "createDataframe"
+      parameters:
+        - in: "body"
+          name: "body"
+          description: ""
+          required: true
+          schema:
+            $ref: "#/definitions/Dataframe"
+      responses:
+        200:
+          description: ""
+          schema:
+            $ref: "#/definitions/Dataframe"
+    delete:
+      tags:
+        - "dataframes"
+      operationId: "deleteDataframe"
+      parameters:
+        - name: "dataframeId"
+          in: "path"
+          description: "Dataframe ID"
+          required: true
+          type: "string"
+      responses:
+        204:
+          description: ""
 
 definitions:
   Page:
