@@ -34,12 +34,17 @@ paths:
         - "pages"
       operationId: "createPage"
       parameters:
+        - name: "siteId"
+          in: "path"
+          description: "Site ID"
+          required: true
+          type: "string"        
         - in: "body"
           name: "body"
           description: ""
           required: true
           schema:
-            $ref: "#/definitions/Page"
+            $ref: "#/definitions/PageInput"
       responses:
         200:
           description: ""
@@ -108,7 +113,7 @@ paths:
           description: ""
           required: true
           schema:
-            $ref: "#/definitions/Site"
+            $ref: "#/definitions/SiteInput"
       responses:
         200:
           description: ""
@@ -205,11 +210,40 @@ definitions:
       site_id:
         type: "string"
 
+  PageInput:
+    type: "object"
+    properties:
+      title:
+        type: "string"
+        example: "Weekly Report"
+      content:
+        type: "string"
+
   Site:
     type: "object"
     properties:
       id:
         type: "string"
+      name:
+        type: "string"
+        example: "foobar"
+      slug:
+        type: "string"
+        example: "client-abc-weekly-report"
+      default_page_id:
+        type: "string"
+      pages:
+        type: "array"
+        items: {
+            $ref: "#/definitions/Page"
+        }
+
+  SiteInput:
+    type: "object"
+    properties:
+      name:
+        type: "string"
+        example: "foobar"
       slug:
         type: "string"
         example: "client-abc-weekly-report"
