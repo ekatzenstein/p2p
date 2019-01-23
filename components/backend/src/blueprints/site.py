@@ -1,57 +1,75 @@
-from flask import (Blueprint, jsonify)
+"""Flask view functions for the site resource endpoint."""
+from flask import Blueprint
+from flask_apispec import use_kwargs, marshal_with
 
+from models import db, Site, Page
+from .schemas import SiteSchema, PageSchema
 
 SITE = Blueprint('site', __name__)
 
 
-_sites = [  # TODO remove once no longer needed
-    {
-        'id': '0',
-        'slug': 'Fun Times',
-        'default_page_id': None,
-    },
-    {
-        'id': '1',
-        'slug': 'Dino DNA',
-        'default_page_id': None,
-    },
-]
-
-_pages = [
-    {
-        'id': 0,
-        'title': 'title1',
-        'content': 'this is some content',
-        'site_id': '0'
-    },
-    {
-        'id': 1,
-        'title': 'title2',
-        'content': 'this is some content2',
-        'site_id': '1'
-    }
-]
-
-
 @SITE.route('/', methods=['GET'])
-def list_sites():
-    sites = _sites  # TODO retrieve from database
-    return jsonify(sites)
+@marshal_with(SiteSchema(many=True), 200)
+def get_sites():
+    return Site.query.all()
+
+
+@SITE.route('/', methods=['POST'])
+@use_kwargs(SiteSchema(), locations=('json',))
+@marshal_with(SiteSchema(many=False), 200)
+def create_site(name, slug, default_page_id=None):
+    new_site = Site(name=name, slug=slug, default_page_id=default_page_id)
+    db.session.add(new_site)
+    db.session.commit()
+    return new_site
 
 
 @SITE.route('/<int:site_id>', methods=['GET'])
+@marshal_with(SiteSchema(many=False), 200)
 def get_site(site_id):
-    site = _sites[site_id]  # TODO retrieve from database
-    return jsonify(site)
+    return Site.query.get(site_id)
+
+
+@SITE.route('/<int:site_id>', methods=['DELETE'])
+@marshal_with(None, 204, "Site deleted", apply=False)
+def delete_site(site_id):
+    site = Site.query.get(site_id)
+    for page in site.pages:
+        db.session.delete(page)
+    db.session.delete(site)
+    db.session.commit()
+    return '', 204, {'content-length': 0}
 
 
 @SITE.route('/<int:site_id>/pages/', methods=['GET'])
-def list_pages(site_id):
-    pages = _pages  # TODO retrieve from database
-    return jsonify(pages)
+@marshal_with(PageSchema(many=True), 200)
+def get_pages(site_id):
+    site = db.session.query(Site).get(site_id)
+    return site.pages
+
+
+@SITE.route('/<int:site_id>/pages/', methods=['POST'])
+@marshal_with(PageSchema(many=False), 201)
+@use_kwargs(PageSchema(), locations=('json',))
+def create_page(site_id, **kwargs):
+    site = db.session.query(Site).get(site_id)
+    new_page = Page(title='a title', content='some content', site_id=site_id)
+    site.pages.append(new_page)
+    db.session.commit()
+    return new_page.title
 
 
 @SITE.route('/<int:site_id>/pages/<int:page_id>', methods=['GET'])
+@marshal_with(PageSchema(many=False), 200)
 def get_page(site_id, page_id):
-    page = _pages[page_id]   # TODO retrieve from database
-    return jsonify(page)
+    page = db.session.query(Page).get(page_id)
+    return page
+
+
+@SITE.route('/<int:site_id>/pages/<int:page_id>', methods=['DELETE'])
+@marshal_with(None, 204, "Page deleted", apply=False)
+def delete_page(site_id, page_id):
+    page = db.session.query(Page).get(page_id)
+    db.session.delete(page)
+    db.session.commit()
+    return '', 204, {'content-length': 0}
