@@ -1,14 +1,14 @@
 import React from 'react';
 import * as d3 from 'd3';
-import responsive from '../hoc/responsive';
+import responsive from './hoc/responsive';
 import Axis from './format/Axis';
 import Grid from './format/Grid';
 class Chart extends React.Component {
   get xKey() {
-    return 'vehic';
+    return this.props.x || 'vehic';
   }
   get yKey() {
-    return 'fin';
+    return this.props.y || 'fin';
   }
 
   get data() {
@@ -71,7 +71,7 @@ class Chart extends React.Component {
     const { width, height } = this.props;
     const { xKey, yKey, data } = this;
 
-    if (width === 0) return null;
+    if (width === 0 || !data.length) return null;
 
     return (
       <svg

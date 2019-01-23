@@ -6,8 +6,7 @@ A completely working example of how to leverage any react component inside a Jup
 
 ```
 npm install
-npm run copy
-cd jupyter-react-example && python setup.py develop
+python setup.py develop
 jupyter notebook
 ```
 
@@ -15,13 +14,4 @@ jupyter notebook
 
 Inside a Jupyter Notebook
 
-```python
-from example import Thing
-from IPython.display import display
-import random
-
-data = [[{'y': random.randrange(1,10), "x": i+1} for i, v in enumerate(range(10))] for x in [1,2,3,4]]
-
-mything = Thing(props={"data":data})
-display(mything)
-```
+`open example_p2p.ipynb`

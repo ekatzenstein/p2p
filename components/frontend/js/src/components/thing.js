@@ -1,14 +1,14 @@
-import React from 'react'
-import { AreaChart } from 'react-easy-chart'
-
-export default function Thing( props ) {
-  return (
-    <AreaChart
-      width={ props.width || 500 }
-      height={ props.height || 300 }
-      interpolate={'cardinal'}
-      data={ props.data }
-      axis
-    />
-  );
+import React from 'react';
+import { AreaChart } from 'react-easy-chart';
+import * as d3 from 'd3';
+export default class App extends React.Component {
+  componentDidMount() {}
+  render() {
+    const { data } = this.props;
+    return (
+      <div className='app-container'>
+        <Chart data={d3.csvParse(data)} />
+      </div>
+    );
+  }
 }
