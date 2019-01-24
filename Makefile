@@ -1,4 +1,4 @@
-.DEFAULT_GOAL := compose-up
+.DEFAULT_GOAL := all
 SHELL := /bin/bash
 
 COMPONENTS ?= 
@@ -30,7 +30,17 @@ build-whl: ## Build the p2p library.
 	@printf -- "Building wheel: $(P2P_WHL)\n"
 	docker build -f components/p2p/Dockerfile -t $(P2P_BUILDER_IMAGE) components/p2p
 	docker run --rm -v $(PWD)/dist:/dist $(P2P_BUILDER_IMAGE)
-	
+
+
 .PHONY: clean
 clean: ## Remove temporary directories.
-	-rm -rf dist data
+	-rm -rf dist data components/jupyter/dist
+
+
+.PHONY: all
+all: ## Runs all steps to have a working demo.
+	make clean
+	make compose-down
+	make build-whl
+	cp -r dist components/jupyter/
+	make compose-up
