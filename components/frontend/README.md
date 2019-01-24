@@ -5,7 +5,7 @@ A completely working example of how to leverage any react component inside a Jup
 ## Running Stand Alone App
 
 ```
-See root directory Readme
+See root directory README (work in progress as of writing)
 ```
 
 
