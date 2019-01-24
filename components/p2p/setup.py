@@ -19,11 +19,11 @@ setup(
     install_requires=parse_requirements("requirements.txt"),
     tests_require=parse_requirements("dev-requirements.txt"),
     data_files=[
-        ('share/jupyter/nbextensions/example', [
+        ('share/jupyter/nbextensions/pandastoproduction', [
             'pandastoproduction/static/index.js'
         ]),
         ("etc/jupyter/nbconfig/notebook.d", [
-            "jupyter-config/nbconfig/notebook.d/example.json"
+            "jupyter-config/nbconfig/notebook.d/pandastoproduction.json"
         ])
     ],
     zip_safe=False,
