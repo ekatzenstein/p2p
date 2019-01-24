@@ -30,6 +30,17 @@ def get_site(site_id):
     return Site.query.get(site_id)
 
 
+@SITE.route('/<int:site_id>', methods=['PUT'])
+@marshal_with(SiteSchema(many=False), 200)
+@use_kwargs(SiteSchema(only=('name', 'slug', 'default_page_id')),
+            locations=('json',))
+def update_site(site_id, **kwargs):
+    site = Site.query.get(site_id)
+    site.update(kwargs)
+    db.session.commit()
+    return site
+
+
 @SITE.route('/<int:site_id>', methods=['DELETE'])
 @marshal_with(None, 204, "Site deleted", apply=False)
 def delete_site(site_id):
@@ -63,6 +74,17 @@ def create_page(site_id, **kwargs):
 @marshal_with(PageSchema(many=False), 200)
 def get_page(site_id, page_id):
     page = db.session.query(Page).get(page_id)
+    return page
+
+
+@SITE.route('/<int:site_id>/pages/<int:page_id>', methods=['PUT'])
+@marshal_with(PageSchema(many=False), 200)
+@use_kwargs(PageSchema(only=('title', 'content')),
+            locations=('json',))
+def update_page(site_id, page_id, **kwargs):
+    page = Page.query.get(page_id)
+    page.update(kwargs)
+    db.session.commit()
     return page
 
 
