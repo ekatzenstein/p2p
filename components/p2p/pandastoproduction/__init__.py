@@ -1,6 +1,8 @@
 from pandastoproduction.publish import publish
+from pandastoproduction.show import show
 from pandastoproduction.models import *
 from pandastoproduction.config import CONFIG
+
 
 def _jupyter_nbextension_paths():
     return [{
