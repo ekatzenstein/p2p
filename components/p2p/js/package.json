@@ -11,9 +11,7 @@
     "react"
   ],
   "scripts": {
-    "prepublish": "webpack -p",
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "postinstall": "webpack -p && cd ../ && pip install nbextensions && python setup.py develop && jupyter notebook"
+    "build": "webpack -p"
   },
   "devDependencies": {
     "css-loader": "^0.23.1",

@@ -26,8 +26,7 @@
     "start": "react-scripts-with-stylus start src/style.styl",
     "build": "react-scripts-with-stylus build src/style.styl",
     "test": "react-scripts test --env=jsdom",
-    "eject": "react-scripts eject",
-    "jupyter-build": "node scripts/copy.js && cd jupyter/js && npm install"
+    "eject": "react-scripts eject"
   },
   "eslintConfig": {
     "extends": "react-app"
