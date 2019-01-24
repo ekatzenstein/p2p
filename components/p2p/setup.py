@@ -18,5 +18,13 @@ setup(
     packages=find_packages(),
     install_requires=parse_requirements("requirements.txt"),
     tests_require=parse_requirements("dev-requirements.txt"),
+    data_files=[
+        ('share/jupyter/nbextensions/example', [
+            'example/static/index.js'
+        ]),
+        ("etc/jupyter/nbconfig/notebook.d", [
+            "jupyter-config/nbconfig/notebook.d/example.json"
+        ])
+    ],
     zip_safe=False,
 )
