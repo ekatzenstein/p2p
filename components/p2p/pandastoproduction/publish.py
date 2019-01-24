@@ -14,8 +14,10 @@ def publish(dataframes: List[DataFrame] = [], sites: List[Site] = []):
 
     client = ApiClient(CONFIG['api_base_url'])
     for site in sites:
-        client.create_site(site)
+        client.create_or_update_site(site)
         for page in site.pages:
-            client.create_page(page)
+            client.create_or_update_page(page)
+    for dataframe in dataframes:
+        client.create_or_update_dataframe(dataframe)
 
     print('Done!')

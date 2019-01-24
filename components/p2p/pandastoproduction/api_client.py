@@ -1,8 +1,23 @@
+import io
 import json
 import requests
 
 from pandastoproduction.models import DataFrame, Site, Page
 from pandastoproduction.validate import validate_not_null
+
+
+def print_json(obj):
+    if obj is None:
+        print('None')
+        return
+    try:
+        obj = obj.decode('utf-8')
+    except AttributeError:
+        pass
+    try:
+        print(json.dumps(json.loads(obj), indent=4, sort_keys=True))
+    except:
+        print(obj)
 
 
 class ApiClient(object):
@@ -23,9 +38,9 @@ class ApiClient(object):
         )
         print('Request:')
         print(method + ' ' + url)
-        print(json.dumps(json.loads(resp.request.body.decode('utf-8')), indent=4, sort_keys=True))
+        print_json(resp.request.body)
         print('Response:')
-        print(json.dumps(json.loads(resp.content.decode('utf-8')), indent=4, sort_keys=True))
+        print_json(resp.content)
         return resp
 
     def create_page(self, page: Page):
@@ -38,22 +53,43 @@ class ApiClient(object):
         site.id = resp.json()['id']
 
     def create_dataframe(self, dataframe: DataFrame):
-        pass  # TODO
+        resp = self._request('POST', '/dataframes/')
+        dataframe.id = resp.json()['id']
+        stream = io.StringIO()
+        dataframe.df.to_csv(stream)
+        files = {'file': ('dataframe.csv', stream)}
+        self._request('POST', f'/dataframes/{dataframe.id}', files=files)
 
     def update_page(self, page: Page):
-        pass  # TODO
+        validate_not_null('site_id', page.site.id)
+        validate_not_null('id', page.id)
+        self._request('PUT', f'/sites/{page.site.id}/pages/{page.id}', json=page.to_json())
 
     def update_site(self, site: Site):
-        pass  # TODO
+        validate_not_null('id', site.id)
+        self._request('PUT', f'/sites/{site.id}', json=site.to_json())
 
     def update_dataframe(self, dataframe: DataFrame):
-        pass  # TODO
+        validate_not_null('id', dataframe.id)
+        stream = io.StringIO()
+        dataframe.df.to_csv(stream)
+        files = {'file': ('dataframe.csv', stream)}
+        self._request('PUT', f'/dataframes/{dataframe.id}', files=files)
 
     def create_or_update_page(self, page: Page):
-        pass  # TODO
+        if page.id is not None:
+            self.update_page(page)
+        else:
+            self.create_page(page)
 
     def create_or_update_site(self, site: Site):
-        pass  # TODO
+        if site.id is not None:
+            self.update_site(site)
+        else:
+            self.create_site(site)
 
     def create_or_update_dataframe(self, dataframe: DataFrame):
-        pass  # TODO
+        if dataframe.id is not None:
+            self.update_dataframe(dataframe)
+        else:
+            self.create_dataframe(dataframe)
