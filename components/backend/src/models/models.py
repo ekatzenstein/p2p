@@ -14,6 +14,11 @@ class APIModel(db.Model):
 
     __abstract__ = True
 
+    def update(self, attributes):
+        for field, value in attributes.items():
+            print(field, value)
+            setattr(self, field, value)
+
     @classmethod
     def resource_type(cls):
         """Return a string that describes what type of resource this is."""
