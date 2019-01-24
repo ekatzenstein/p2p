@@ -42,4 +42,5 @@ all: ## Runs all steps to have a working demo.
 	make clean
 	make compose-down
 	make build-whl
+	cp -r dist components/jupyter/
 	make compose-up

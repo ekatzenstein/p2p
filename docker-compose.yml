@@ -23,9 +23,7 @@ services:
     container_name: jupyter
     volumes:
       - "./components/jupyter/notebooks/:/home/jovyan/work/"
-    build: 
-      context: ./components/
-      dockerfile: ./jupyter/Dockerfile
+    build: ./components/jupyter
     ports:
       - "8888:8888"
 
