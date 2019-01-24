@@ -12,5 +12,4 @@ class Page(APIModel):
     id_ = db.Column('id', db.Integer, primary_key=True)
     title = db.Column(db.String)
     content = db.Column(db.String)
-    site_id = db.Column(db.Integer, db.ForeignKey(
-                'site.id', ondelete='CASCADE'), nullable=False)
+    dataframe_id = db.Column(db.Integer, db.ForeignKey('dataframe.id', ondelete='CASCADE'))
