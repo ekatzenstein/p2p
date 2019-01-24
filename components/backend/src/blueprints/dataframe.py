@@ -1,5 +1,6 @@
 """Flask view functions for the dataframe resource endpoint."""
 import os
+from json import dumps
 
 from flask import (Blueprint, request, current_app)
 from flask_apispec import use_kwargs, marshal_with, doc
@@ -13,6 +14,9 @@ from utils import hexdigest
 
 DATAFRAME = Blueprint('dataframe', __name__)
 BUCKET_NAME = 'dataframes'
+POLICY_WORLD_READ = {"Version": "2012-10-17", "Statement": [{"Effect": "Allow", "Principal": {"AWS": ["*"]}, "Action":["s3:GetBucketLocation", "s3:ListBucket", "s3:ListBucketMultipartUploads"], "Resource":["arn:aws:s3:::dataframes"]}, {
+    "Effect": "Allow", "Principal": {"AWS": ["*"]}, "Action":["s3:GetObject", "s3:ListMultipartUploadParts", "s3:PutObject", "s3:AbortMultipartUpload", "s3:DeleteObject"], "Resource":["arn:aws:s3:::dataframes/*"]}]}
+
 
 @DATAFRAME.route('/', methods=['GET'])
 @marshal_with(DataframeSchema(many=True), 200)
@@ -64,6 +68,7 @@ def create_dataframe_content(dataframe_id):
 
         try:
             minioClient.make_bucket(BUCKET_NAME)
+            minioClient.set_bucket_policy(BUCKET_NAME, dumps(POLICY_WORLD_READ))
         except BucketAlreadyOwnedByYou:
             pass
         except BucketAlreadyExists:
