@@ -4,14 +4,12 @@ Hackweek project. Dataframes to React.
 
 ## Getting Started
 
-1. Install prerequisites.
+1. Install `docker` and `docker-compose`.
 
-   - `docker` and `docker-compose` (installed as part of Docker for Mac)
-
-1. Start the stack.
+1. Build and start the stack.
 
    ```bash
-   make
+   make all
    ```
 
 1. View the stack.
@@ -21,6 +19,7 @@ Hackweek project. Dataframes to React.
    | Frontend    | http://localhost/         |
    | Backend API | http://localhost/api/     |
    | Swagger UI  | http://localhost/swagger/ |
+   | Jupyter     | http://localhost:8888/    |
 
 ## Minio
 
