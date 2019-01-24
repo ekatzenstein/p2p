@@ -1,4 +1,4 @@
-from blueprints import (dataframe, site)
+from blueprints import (dataframe, page)
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 
@@ -17,7 +17,7 @@ def build_app():
     app.config['MINIO_STORAGE_URL'] = 'localhost/file/'
 
     app.register_blueprint(dataframe.DATAFRAME, url_prefix='/dataframes')
-    app.register_blueprint(site.SITE, url_prefix='/sites')
+    app.register_blueprint(page.PAGE, url_prefix='/pages')
 
     return app
 
