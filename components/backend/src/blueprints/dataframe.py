@@ -4,6 +4,8 @@ import os
 from flask import (Blueprint, request, current_app)
 from flask_apispec import use_kwargs, marshal_with, doc
 from minio import Minio
+from minio.error import (BucketAlreadyOwnedByYou,
+                         BucketAlreadyExists)
 
 from models import db, Dataframe
 from .schemas import DataframeSchema
@@ -59,6 +61,14 @@ def create_dataframe_content(dataframe_id):
                             access_key=current_app.config['MINIO_ACCESS_KEY'],
                             secret_key=current_app.config['MINIO_SECRET_KEY'],
                             secure=False)
+
+        try:
+            minioClient.make_bucket("dataframes")
+        except BucketAlreadyOwnedByYou:
+            pass
+        except BucketAlreadyExists:
+            pass
+
         minioClient.fput_object('dataframes', f'dataframe_{dataframe_id}.csv', full_filepath)
 
         dataframe.url = f"http://{current_app.config['MINIO_ENDPOINT']}/dataframes/{filename}"
