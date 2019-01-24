@@ -17,7 +17,5 @@ def publish(dataframes: List[DataFrame] = [], sites: List[Site] = []):
         client.create_site(site)
         for page in site.pages:
             client.create_page(page)
-    for dataframe in dataframes:
-        client.create_dataframe(dataframe)
 
     print('Done!')

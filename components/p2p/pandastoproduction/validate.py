@@ -11,3 +11,8 @@ def validate_type_list(name, obj, expected_type):
     validate_type(name, obj, list)
     for i, item in enumerate(obj):
         validate_type(f'{name}[{i}]', item, expected_type)
+
+
+def validate_not_null(name, obj):
+    if obj is None:
+        raise TypeError(f'Error with {name}: Mising.')

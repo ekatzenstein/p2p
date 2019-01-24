@@ -1,6 +1,8 @@
+import json
 import requests
 
 from pandastoproduction.models import DataFrame, Site, Page
+from pandastoproduction.validate import validate_not_null
 
 
 class ApiClient(object):
@@ -21,16 +23,14 @@ class ApiClient(object):
         )
         print('Request:')
         print(method + ' ' + url)
-        print(resp.request.body.decode('utf-8'))
+        print(json.dumps(json.loads(resp.request.body.decode('utf-8')), indent=4, sort_keys=True))
         print('Response:')
-        print(resp.content.decode('utf-8'))
+        print(json.dumps(json.loads(resp.content.decode('utf-8')), indent=4, sort_keys=True))
         return resp
 
     def create_page(self, page: Page):
-        site_id = page.site_id
-        if site_id is None:
-            raise ValueError('Page site_id is missing.')
-        resp = self._request('POST', f'/sites/{site_id}/pages/', json=page.to_json())
+        validate_not_null('site_id', page.site.id)
+        resp = self._request('POST', f'/sites/{page.site.id}/pages/', json=page.to_json())
         page.id = resp.json()['id']
 
     def create_site(self, site: Site):

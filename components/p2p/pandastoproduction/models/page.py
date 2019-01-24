@@ -67,13 +67,16 @@ class Scatterplot(PageContent):
 
 
 class Page(object):
-    def __init__(self, title: str = None, content: List[PageContent] = [], site_id: str = None):
+    def __init__(self, title: str = None, content: List[PageContent] = [], site: object = None):
         validate_type('title', title, str)
         validate_type_list('content', content, PageContent)
-        validate_type('site_id', site_id, str)
+        validate_type('site', site, object)
         self._title = title
         self._content = content
-        self._site_id = site_id
+        self._site = site
+        self._id = None
+        if site:
+            site.add_pages(self)
 
     @property
     def title(self):
@@ -85,13 +88,15 @@ class Page(object):
         self._title = title
 
     @property
-    def site_id(self):
-        return self._site_id
+    def site(self):
+        return self._site
 
-    @site_id.setter
-    def site_id(self, site_id):
-        validate_type('site_id', site_id, str)
-        self._site_id = site_id
+    @site.setter
+    def site(self, site):
+        validate_type('site', site, object)
+        self._site = site
+        if site:
+            site.add_pages(self)
 
     def add_content(self, content: Union[PageContent, List[PageContent]]):
         if isinstance(content, list):
@@ -111,13 +116,13 @@ class Page(object):
         self._id = id
 
     def __str__(self):
-        return f'Page: title="{self._title}" content={self._content} site_id={self._site_id} id={self._id}'
+        return f'Page: title="{self._title}" content={self._content} site={self._site} id={self._id}'
 
     def to_json(self):
         obj = {
             'id': self._id,
             'title': self._title,
-            'site_id': self._site_id,
+            'site_id': self._site.id if self._site else None,
             'content': json.dumps(self._content, cls=SimpleEncoder),
         }
         data = {}
