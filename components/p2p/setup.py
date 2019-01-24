@@ -20,7 +20,7 @@ setup(
     tests_require=parse_requirements("dev-requirements.txt"),
     data_files=[
         ('share/jupyter/nbextensions/example', [
-            'example/static/index.js'
+            'pandastoproduction/static/index.js'
         ]),
         ("etc/jupyter/nbconfig/notebook.d", [
             "jupyter-config/nbconfig/notebook.d/example.json"
