@@ -16,7 +16,7 @@ RUN pip install wheel
 
 COPY . .
 
-COPY --from=js_builder /usr/src/app/build/index.js ./example/static/index.js
+COPY --from=js_builder /usr/src/app/build/index.js ./pandastoproduction/static/index.js
 
 VOLUME ["/dist"]
 
