@@ -12,7 +12,7 @@ from .schemas import DataframeSchema
 from utils import hexdigest
 
 DATAFRAME = Blueprint('dataframe', __name__)
-
+BUCKET_NAME = 'dataframes'
 
 @DATAFRAME.route('/', methods=['GET'])
 @marshal_with(DataframeSchema(many=True), 200)
@@ -63,15 +63,15 @@ def create_dataframe_content(dataframe_id):
                             secure=False)
 
         try:
-            minioClient.make_bucket("dataframes")
+            minioClient.make_bucket(BUCKET_NAME)
         except BucketAlreadyOwnedByYou:
             pass
         except BucketAlreadyExists:
             pass
 
-        minioClient.fput_object('dataframes', f'dataframe_{dataframe_id}.csv', full_filepath)
+        minioClient.fput_object(BUCKET_NAME, f'dataframe_{dataframe_id}.csv', full_filepath)
 
-        dataframe.url = f"http://{current_app.config['MINIO_ENDPOINT']}/dataframes/{filename}"
+        dataframe.url = f"http://{current_app.config['MINIO_STORAGE_URL']}{BUCKET_NAME}/{filename}"
         dataframe.digest = hexdigest(full_filepath)
         db.session.commit()
 
