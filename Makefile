@@ -30,8 +30,7 @@ build-whl: ## Build the p2p library.
 	@printf -- "Building wheel: $(P2P_WHL)\n"
 	docker build -f components/p2p/Dockerfile -t $(P2P_BUILDER_IMAGE) components/p2p
 	docker run --rm -v $(PWD)/dist:/dist $(P2P_BUILDER_IMAGE)
-
-
+	
 .PHONY: clean
 clean: ## Remove temporary directories.
 	-rm -rf dist data

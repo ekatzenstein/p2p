@@ -19,6 +19,16 @@ services:
         aliases:
           - "compose-p2p-backend"
 
+  jupyter:
+    container_name: jupyter
+    volumes:
+      - "./components/jupyter/notebooks/:/home/jovyan/work/"
+    build: 
+      context: ./components/
+      dockerfile: ./jupyter/Dockerfile
+    ports:
+      - "8888:8888"
+
   postgres:
     container_name: postgres
     image: postgres:9.6-alpine
