@@ -14,6 +14,7 @@ def build_app():
     app.config['MINIO_ENDPOINT'] = 'compose-minio:9000'
     app.config['MINIO_ACCESS_KEY'] = 'minio'
     app.config['MINIO_SECRET_KEY'] = 'minio123'
+    app.config['MINIO_DATAFRAME_URL'] = 'localhost/file/dataframes/'
 
     app.register_blueprint(dataframe.DATAFRAME, url_prefix='/dataframes')
     app.register_blueprint(site.SITE, url_prefix='/sites')

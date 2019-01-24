@@ -71,7 +71,7 @@ def create_dataframe_content(dataframe_id):
 
         minioClient.fput_object('dataframes', f'dataframe_{dataframe_id}.csv', full_filepath)
 
-        dataframe.url = f"http://{current_app.config['MINIO_ENDPOINT']}/dataframes/{filename}"
+        dataframe.url = f"http://{current_app.config['MINIO_DATAFRAME_URL']}{filename}"
         dataframe.digest = hexdigest(full_filepath)
         db.session.commit()
 
