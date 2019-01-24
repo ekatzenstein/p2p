@@ -102,13 +102,14 @@ paths:
       tags:
         - "dataframes"
       operationId: "createDataframe"
+      consumes:
+          - multipart/form-data  # and/or application/x-www-form-urlencoded
       parameters:
-        - in: "body"
-          name: "body"
-          description: ""
-          required: true
-          schema:
-            $ref: "#/definitions/Dataframe"
+          - name: file
+            in: formData
+            description: The uploaded file data
+            required: true
+            type: file
       responses:
         200:
           description: ""
@@ -134,14 +135,20 @@ paths:
     put:
       tags:
         - "dataframes"
-      operationId: "createDataframe"
+      operationId: "updateDataframe"
+      consumes:
+          - multipart/form-data  # and/or application/x-www-form-urlencoded
       parameters:
-        - in: "body"
-          name: "body"
-          description: ""
-          required: true
-          schema:
-            $ref: "#/definitions/Dataframe"
+          - name: "dataframeId"
+            in: "path"
+            description: "Dataframe ID"
+            required: true
+            type: "string"
+          - name: file
+            in: formData
+            description: The uploaded file data
+            required: true
+            type: file
       responses:
         200:
           description: ""
