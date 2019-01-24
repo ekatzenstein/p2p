@@ -17,5 +17,6 @@ setup(
     author="Enigma Technologies",
     packages=find_packages(),
     install_requires=parse_requirements("requirements.txt"),
+    tests_require=parse_requirements("dev-requirements.txt"),
     zip_safe=False,
 )
