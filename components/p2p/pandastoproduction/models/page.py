@@ -46,24 +46,74 @@ class Paragraph(PageContent):
 
 
 class Histogram(PageContent):
+    '''
+    Histogram(required: df (with 1 column), 
+              optional: nbins (int))
+    '''
+
     CONTENT_TYPE = "histogram"
 
-    def __init__(self):
+    def __init__(self, series: str = None, bins: int = 10, title: str = None):
+        self._series = series
+        self._bins = bins
         super().__init__(self.CONTENT_TYPE)
+
+    @property
+    def title(self):
+        return self._title
+
+    @title.setter
+    def title(self, title):
+        validate_type('title', title, str)
+        self._title = title
 
 
 class Boxplot(PageContent):
+    '''
+    Boxplot(required: df (with >= 1 column),
+            optional: grouping - different boxplot for each group, 
+            ? optional: whisker (boolean))
+    '''
+
     CONTENT_TYPE = "boxplot"
 
-    def __init__(self):
+    def __init__(self, xvar: str = None, grouping: str = None, title: str = None):
+        self._xvar = xvar
+        self._grouping = grouping
         super().__init__(self.CONTENT_TYPE)
+
+    @property
+    def title(self):
+        return self._title
+
+    @title.setter
+    def title(self, title):
+        validate_type('title', title, str)
+        self._title = title
 
 
 class Scatterplot(PageContent):
+    '''
+    Scatterplot(required: x_df (with 1 column),
+                          y_df (with 1 column)
+                optional: )
+    '''
+
     CONTENT_TYPE = "scatterplot"
 
-    def __init__(self):
+    def __init__(self, xvar: str = None, yvar: str = None, title: str = None):
+        self._xvar = xvar
+        self._yvar = yvar
         super().__init__(self.CONTENT_TYPE)
+
+    @property
+    def title(self):
+        return self._title
+
+    @title.setter
+    def title(self, title):
+        validate_type('title', title, str)
+        self._title = title
 
 
 class Page(object):
