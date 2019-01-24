@@ -13,10 +13,9 @@
   "scripts": {
     "prepublish": "webpack -p",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "postinstall": "webpack -p && cd ../ && pip install nbextensions && python setup.py develop && jupyter notebook"
+    "postinstall": "webpack -p && cd ../ && python setup.py develop && jupyter notebook"
   },
-  "devDependencies": {},
-  "dependencies": {
+  "devDependencies": {
     "css-loader": "^0.23.1",
     "json-loader": "^0.5.4",
     "jsx-loader": "^0.13.2",
@@ -24,7 +23,9 @@
     "less-loader": "^2.2.3",
     "style-loader": "^0.13.1",
     "webpack": "^1.12.14",
-    "transform-loader": "^0.2.3",
+    "transform-loader": "^0.2.3"
+  },
+  "dependencies": {
     "babel-cli": "^6.10.1",
     "babel-loader": "^6.2.4",
     "babel-plugin-add-module-exports": "^0.2.1",

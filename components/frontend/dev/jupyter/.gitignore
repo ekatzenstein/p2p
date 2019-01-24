@@ -1,2 +1,1 @@
-**/*.pyc
-/js/node_modules
+.ipynpb_checkpoints
