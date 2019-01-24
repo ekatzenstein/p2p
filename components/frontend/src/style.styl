@@ -1,0 +1,42 @@
+
+transition(arg = all, time = 400ms, delay = 0ms) {
+  transition: arg time ease delay;
+}
+
+ellipsis() {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+shadow(opacity = 0.09) {
+  box-shadow: 0 0px 20px 0 rgba(0, 0, 0, opacity);
+}
+
+// colors
+blurple = #5166aa;
+accent = #faf4e7;
+// fonts
+chronicle = 'Chronicle Display', serif;
+lab = 'Lab Grotesque', sans-serif;
+// font sizes
+txt-size-title = 36px;
+txt-size-xlg = 26px;
+txt-size = 16px;
+weight = 200;
+// margins and padding
+gutter = 20px;
+radius = 4px;
+// sizes
+max-width = 1200px;
+max-width-sub = 900px;
+// borders
+divider = 2px dotted black;
+divider-lt = 1px solid rgb(80%, 80%, 80%);
+
+round() {
+  border-radius: radius;
+  border: 1px solid darken(accent, 10%);
+}
+
+@import '*/**/*.styl';
