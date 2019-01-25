@@ -37,7 +37,7 @@ build-whl: ## Build the p2p library.
 
 .PHONY: clean
 clean: ## Remove temporary directories.
-	-rm -rf dist data components/jupyter/dist
+	-rm -rf dist components/jupyter/dist
 
 
 .PHONY: all

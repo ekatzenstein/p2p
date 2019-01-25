@@ -66,7 +66,7 @@ const Axis = (props) => {
               dy={labelOffset}
               textAnchor='end'
             >
-              {chartType === 'scatter' && name}
+              {name}
             </text>
           </g>
         </g>

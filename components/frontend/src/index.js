@@ -27,8 +27,8 @@ ReactDOM.render(
   <Provider store={store}>
     <ConnectedRouter history={history}>
       <div>
-        <Route path={`/`} component={App} />
-        <Route exact path={`/risks/:riskId`} component={App} />
+        <Route exact path={`/`} component={App} />
+        <Route exact path={`/:pageId`} component={App} />
       </div>
     </ConnectedRouter>
   </Provider>,

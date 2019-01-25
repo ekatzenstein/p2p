@@ -1,0 +1,35 @@
+.tooltip {
+  position: fixed;
+  padding: 20px;
+  z-index: 10000;
+  height: auto;
+  padding: 20px;
+  height: 70px;
+  pointer-events: none;
+  opacity: 0.9;
+  transition();
+
+  .tooltip-wrap {
+    border-radius: 0px;
+    height: 70px;
+    padding: 20px;
+    width: auto;
+    // min-width: 300px;
+    // max-width: 300px;
+    overflow: visible;
+    white-space: nowrap;
+    // background-color: white;
+    position: absolute;
+    left: -50px;
+    top: calc(-150%);
+    font-size: 14px;
+    // shadow();
+    display: flex;
+    flex-wrap: wrap;
+    align-content: center;
+
+    div {
+      width: 100%;
+    }
+  }
+}

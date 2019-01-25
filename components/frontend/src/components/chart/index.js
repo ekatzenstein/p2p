@@ -141,11 +141,9 @@ class Chart extends React.Component {
       bins,
       binCount
     } = this;
-    const { width, height, xOptions, chartType } = this.props;
+    const { width, height, xOptions, chartType, handleHover } = this.props;
     const { xKey, yKey, rKey, colorKey, data } = this;
     const yScaleHisto = this.yScaleHisto(bins);
-
-    console.log(this.bins, this.props);
 
     if (width === 0 || !data.length) return null;
 
@@ -244,6 +242,9 @@ class Chart extends React.Component {
                         } = node;
                         return (
                           <circle
+                            ref={(node) => {
+                              this[`circle-${i}`] = node;
+                            }}
                             key={i}
                             style={{
                               fill,
@@ -252,6 +253,18 @@ class Chart extends React.Component {
                             cx={cx}
                             cy={cy}
                             r={r}
+                            onMouseOver={() => {
+                              handleHover(
+                                data,
+                                this[`circle-${i}`],
+                                [
+                                  { label: 'x', key: xKey },
+                                  { label: 'y', key: yKey },
+                                  { label: 'radius', key: rKey },
+                                  { label: 'color', key: colorKey }
+                                ].filter((el) => el.key)
+                              );
+                            }}
                           />
                         );
                       })}
