@@ -173,25 +173,25 @@ class ChartContainer extends React.Component {
     tooltip: {}
   };
   handleHoverScatter = (data, element, contentKeys) => {
-    if (element) {
-      const content = (
-        <div className='tooltip-content'>
-          {contentKeys.map((key, i) => {
-            return (
-              <div className='tooltip-row' key={i}>
-                {key.key} ({key.label}): {d3.format('.3s')(data[key.key])}
-              </div>
-            );
-          })}
-        </div>
-      );
-      const bbox = element.getBoundingClientRect();
-      const x = bbox.left + bbox.width / 2;
-      const y = bbox.top;
-      this.setState({ tooltip: { x, y, content } });
-    } else {
-      this.setState({ tooltip: { x: 0, y: 0, content: '' } });
-    }
+    // if (element) {
+    //   const content = (
+    //     <div className='tooltip-content'>
+    //       {contentKeys.map((key, i) => {
+    //         return (
+    //           <div className='tooltip-row' key={i}>
+    //             {key.key} ({key.label}): {d3.format('.3s')(data[key.key])}
+    //           </div>
+    //         );
+    //       })}
+    //     </div>
+    //   );
+    //   const bbox = element.getBoundingClientRect();
+    //   const x = bbox.left + bbox.width / 2;
+    //   const y = bbox.top;
+    //   this.setState({ tooltip: { x, y, content } });
+    // } else {
+    //   this.setState({ tooltip: { x: 0, y: 0, content: '' } });
+    // }
   };
   getItem = (item, index) => {
     switch (item.renderType) {
@@ -226,7 +226,7 @@ class ChartContainer extends React.Component {
   render() {
     return (
       <div className='content-container'>
-        {this.state.tooltip.content && <Tooltip {...this.state.tooltip} />}
+        {/* {this.state.tooltip.content && <Tooltip {...this.state.tooltip} />} */}
         <div className='header-content'>
           {/* <img src='/img/logo.svg' height='60px' /> */}
         </div>
