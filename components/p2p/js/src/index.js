@@ -1,9 +1,11 @@
 import JupyterReact from 'jupyter-react-js';
 import components from './components';
 
+const TARGET_NAME = 'p2p';
+
 function load_ipython_extension() {
   requirejs(['base/js/namespace', 'base/js/events'], function(Jupyter, events) {
-    JupyterReact.init(Jupyter, events, 'react.thing', {
+    JupyterReact.init(Jupyter, events, TARGET_NAME, {
       components,
       save: false
     });

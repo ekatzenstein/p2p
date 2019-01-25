@@ -1,6 +1,9 @@
 import json
 from typing import List, Union
 
+from jupyter_react import Component
+
+
 from pandastoproduction.validate import validate_type, validate_type_list
 
 
@@ -10,39 +13,59 @@ class SimpleEncoder(json.JSONEncoder):
 
 
 class PageContent(object):
-    def __init__(self, content_type: str):
-        validate_type('content_type', content_type, str)
-        self._content_type = content_type
+    _render_type = 'any'
 
     @property
-    def content_type(self):
-        return self._content_type
-
-    @content_type.setter
-    def content_type(self, content_type: str):
-        validate_type('content_type', content_type, str)
-        self._content_type = content_type
+    def render_type(self):
+        return self._render_type
 
     def __str__(self):
-        return f'PageContent: type={self._content_type}'
+        return f'PageContent: type={self._render_type}'
+
+    def to_json(self):
+        obj = {
+            'render_type': self._render_type,
+        }
+        data = {}
+        for key in obj:
+            if obj[key] is not None:
+                data[key] = obj[key]
+        return data
 
 
-class Paragraph(PageContent):
-    CONTENT_TYPE = "paragraph"
+class _TextContent(PageContent):
+    _render_type = "text"
 
-    def __init__(self, text: str = None):
-        super().__init__(self.CONTENT_TYPE)
-        validate_type('text', text, str)
-        self._text = text
+    def __init__(self, data: str = None):
+        validate_type('data', data, str)
+        self._data = data
 
     @property
-    def text(self):
-        return self._text
+    def data(self):
+        return self._data
 
-    @text.setter
-    def text(self, text):
-        validate_type('text', text, str)
-        self._text = text
+    def to_json(self):
+        obj = {
+            **super().to_json(),
+            'data': self._data,
+        }
+        data = {}
+        for key in obj:
+            if obj[key] is not None:
+                data[key] = obj[key]
+        return data
+
+
+class Paragraph(_TextContent):
+    _render_type = "paragraph"
+
+
+class Title(_TextContent):
+    _render_type = "title"
+
+
+class SubTitle(_TextContent):
+    _render_type = "subtitle"
 
 
 class Histogram(PageContent):
@@ -51,21 +74,31 @@ class Histogram(PageContent):
               optional: nbins (int))
     '''
 
-    CONTENT_TYPE = "histogram"
+    _render_type = "histogram"
 
-    def __init__(self, series: str = None, bins: int = 10, title: str = None):
+    def __init__(self, series: str = None, bins: int = 10):
         self._series = series
         self._bins = bins
-        super().__init__(self.CONTENT_TYPE)
 
     @property
-    def title(self):
-        return self._title
+    def series(self):
+        return self._bins
 
-    @title.setter
-    def title(self, title):
-        validate_type('title', title, str)
-        self._title = title
+    @property
+    def bins(self):
+        return self._series
+
+    def to_json(self):
+        obj = {
+            **super().to_json(),
+            'bins': self._bins,
+            'series': self._series,
+        }
+        data = {}
+        for key in obj:
+            if obj[key] is not None:
+                data[key] = obj[key]
+        return data
 
 
 class Boxplot(PageContent):
@@ -75,21 +108,31 @@ class Boxplot(PageContent):
             ? optional: whisker (boolean))
     '''
 
-    CONTENT_TYPE = "boxplot"
+    _render_type = "boxplot"
 
-    def __init__(self, xvar: str = None, grouping: str = None, title: str = None):
+    def __init__(self, xvar: str = None, grouping: str = None):
         self._xvar = xvar
         self._grouping = grouping
-        super().__init__(self.CONTENT_TYPE)
 
     @property
-    def title(self):
-        return self._title
+    def xvar(self):
+        return self._xvar
 
-    @title.setter
-    def title(self, title):
-        validate_type('title', title, str)
-        self._title = title
+    @property
+    def grouping(self):
+        return self._grouping
+
+    def to_json(self):
+        obj = {
+            **super().to_json(),
+            'grouping': self._grouping,
+            'xvar': self._xvar,
+        }
+        data = {}
+        for key in obj:
+            if obj[key] is not None:
+                data[key] = obj[key]
+        return data
 
 
 class Scatterplot(PageContent):
@@ -99,56 +142,54 @@ class Scatterplot(PageContent):
                 optional: )
     '''
 
-    CONTENT_TYPE = "scatterplot"
+    _render_type = "scatterplot"
 
-    def __init__(self, xvar: str = None, yvar: str = None, title: str = None):
+    def __init__(self, xvar: str = None, yvar: str = None):
         self._xvar = xvar
         self._yvar = yvar
-        super().__init__(self.CONTENT_TYPE)
 
     @property
-    def title(self):
-        return self._title
+    def yvar(self):
+        return self._yvar
 
-    @title.setter
-    def title(self, title):
-        validate_type('title', title, str)
-        self._title = title
+    def xvar(self):
+        return self._xvar
+
+    def to_json(self):
+        obj = {
+            **super().to_json(),
+            'yvar': self._yvar,
+            'xvar': self._xvar,
+        }
+        data = {}
+        for key in obj:
+            if obj[key] is not None:
+                data[key] = obj[key]
+        return data
 
 
-class Page(object):
+class Page(Component):
+    module = 'P2PBaseComponent'
+
     def __init__(self, title: str = None, content: List[PageContent] = []):
         validate_type('title', title, str)
         validate_type_list('content', content, PageContent)
         self._title = title
         self._content = content
         self._id = None
+        super().__init__(target_name='p2p', props={'groups': [c.to_json() for c in self._content]})
+        self.on_msg(self._handle_msg)
+
+    def _handle_msg(self, msg):
+        print(msg)
 
     @property
     def title(self):
         return self._title
 
-    @title.setter
-    def title(self, title):
-        validate_type('title', title, str)
-        self._title = title
-
-    def add_content(self, content: Union[PageContent, List[PageContent]]):
-        if isinstance(content, list):
-            validate_type_list('content', content, PageContent)
-            self._content.extend(content)
-        else:
-            validate_type('content', content, PageContent)
-            self._content.append(content)
-
     @property
     def id(self):
         return self._id
-
-    @id.setter
-    def id(self, id):
-        validate_type('id', id, int)
-        self._id = id
 
     def __str__(self):
         return f'Page: title="{self._title}" content={self._content}'
@@ -157,7 +198,7 @@ class Page(object):
         obj = {
             'id': self._id,
             'title': self._title,
-            'content': json.dumps(self._content, cls=SimpleEncoder),
+            'content': [c.to_json() for c in self._content],
         }
         data = {}
         for key in obj:

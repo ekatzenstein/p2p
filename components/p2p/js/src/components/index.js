@@ -1,5 +1,5 @@
-import Thing from './p2p.js';
+import P2PBaseComponent from './p2p.js';
 
 export default {
-  Thing
+  P2PBaseComponent
 };
