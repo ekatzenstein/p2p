@@ -34,6 +34,5 @@
   "eslintConfig": {
     "extends": "react-app"
   },
-  "browserslist": [],
-  "proxy": "http://localhost/api/"
+  "browserslist": []
 }

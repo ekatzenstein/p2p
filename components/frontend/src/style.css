@@ -72,6 +72,35 @@
   margin: 0;
   font-size: 18px;
 }
+.tooltip {
+  position: fixed;
+  padding: 20px;
+  z-index: 10000;
+  height: auto;
+  padding: 20px;
+  height: 70px;
+  pointer-events: none;
+  opacity: 0.9;
+  transition: all 400ms ease 0ms;
+}
+.tooltip .tooltip-wrap {
+  border-radius: 0px;
+  height: 70px;
+  padding: 20px;
+  width: auto;
+  overflow: visible;
+  white-space: nowrap;
+  position: absolute;
+  left: -50px;
+  top: calc(-150%);
+  font-size: 14px;
+  display: flex;
+  flex-wrap: wrap;
+  align-content: center;
+}
+.tooltip .tooltip-wrap div {
+  width: 100%;
+}
 .group-divider {
   width: 100%;
   display: flex;
@@ -130,6 +159,9 @@
 }
 .enigma-chart-container svg text {
   font-family: 'Chronicle Display', serif;
+}
+.enigma-chart-container svg circle:hover {
+  cursor: pointer;
 }
 body {
   font-family: 'Lab Grotesque', sans-serif;
