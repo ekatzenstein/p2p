@@ -12,7 +12,7 @@ services:
   backend:
     container_name: backend
     volumes:
-      - "/tmp/:/sqllite-db/"
+      - "./sqllite/:/sqllite-db/"
     build: ./components/backend
     ports:
       - "5000:5000"
