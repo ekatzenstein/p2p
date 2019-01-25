@@ -11,4 +11,5 @@ __pycache__
 
 # specific for this project
 components/p2p/js/src/components/chart
+components/p2p/js/src/components/assets
 components/p2p/js/src/components/style.css
