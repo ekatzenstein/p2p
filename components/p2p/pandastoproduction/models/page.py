@@ -13,18 +13,18 @@ class SimpleEncoder(json.JSONEncoder):
 
 
 class PageContent(object):
-    _content_type = 'any'
+    _render_type = 'any'
 
     @property
-    def content_type(self):
-        return self._content_type
+    def render_type(self):
+        return self._render_type
 
     def __str__(self):
-        return f'PageContent: type={self._content_type}'
+        return f'PageContent: type={self._render_type}'
 
     def to_json(self):
         obj = {
-            'content_type': self._content_type,
+            'render_type': self._render_type,
         }
         data = {}
         for key in obj:
@@ -34,7 +34,7 @@ class PageContent(object):
 
 
 class _TextContent(PageContent):
-    _content_type = "text"
+    _render_type = "text"
 
     def __init__(self, data: str = None):
         validate_type('data', data, str)
@@ -57,15 +57,15 @@ class _TextContent(PageContent):
 
 
 class Paragraph(_TextContent):
-    _content_type = "paragraph"
+    _render_type = "paragraph"
 
 
 class Title(_TextContent):
-    _content_type = "title"
+    _render_type = "title"
 
 
 class SubTitle(_TextContent):
-    _content_type = "subtitle"
+    _render_type = "subtitle"
 
 
 class Histogram(PageContent):
@@ -74,7 +74,7 @@ class Histogram(PageContent):
               optional: nbins (int))
     '''
 
-    _content_type = "histogram"
+    _render_type = "histogram"
 
     def __init__(self, series: str = None, bins: int = 10):
         self._series = series
@@ -108,7 +108,7 @@ class Boxplot(PageContent):
             ? optional: whisker (boolean))
     '''
 
-    _content_type = "boxplot"
+    _render_type = "boxplot"
 
     def __init__(self, xvar: str = None, grouping: str = None):
         self._xvar = xvar
@@ -142,7 +142,7 @@ class Scatterplot(PageContent):
                 optional: )
     '''
 
-    _content_type = "scatterplot"
+    _render_type = "scatterplot"
 
     def __init__(self, xvar: str = None, yvar: str = None):
         self._xvar = xvar
