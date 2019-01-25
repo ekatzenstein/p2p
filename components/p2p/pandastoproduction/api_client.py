@@ -50,7 +50,7 @@ class ApiClient(object):
     def create_dataframe(self, dataframe: DataFrame):
         stream = io.StringIO()
         dataframe.to_csv(stream)
-        files = {'file': ('dataframe.csv', stream)}
+        files = {'file': ('dataframe.csv', stream.getvalue())}
         resp = self._request('POST', f'/dataframes/', files=files).json()
         dataframe.id = resp['id']
         dataframe.digest = resp['digest']
