@@ -12,8 +12,6 @@ df = pd.DataFrame({
 
 df1 = p2p.DataFrame(df)
 
-site = p2p.Site(name='Example Site', slug='example-site')
-
 s1 = p2p.Scatterplot('Income', 'Age')
 
 s1.title = 'title for s1'
@@ -21,7 +19,7 @@ s1.title = 'title for s1'
 
 p1 = p2p.Paragraph('This scatterplot shows an interesting trend...')
 
-page1 = p2p.Page('Page 1 Title', content=[s1, p1], site=site)
+page1 = p2p.Page('Page 1 Title', content=[s1, p1])
 
 h1 = p2p.Histogram(series='Age')
 p2 = p2p.Paragraph('This histogram shows...')
@@ -30,6 +28,6 @@ p2 = p2p.Paragraph('This histogram shows...')
 b1 = p2p.Boxplot('Income', grouping='Group')
 p2 = p2p.Paragraph('This boxplot shows...')
 
-page2 = p2p.Page('Page 2 Title', content=[h1, p2, b1, p2], site=site)
+page2 = p2p.Page('Page 2 Title', content=[h1, p2, b1, p2])
 
-p2p.publish(sites=[site], dataframes=[df1])
+p2p.publish(pages=[page1, page2], dataframes=[df1])

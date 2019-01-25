@@ -2,7 +2,7 @@ import io
 import json
 import requests
 
-from pandastoproduction.models import DataFrame, Site, Page
+from pandastoproduction.models import DataFrame, Page
 from pandastoproduction.validate import validate_not_null
 
 
@@ -44,30 +44,20 @@ class ApiClient(object):
         return resp
 
     def create_page(self, page: Page):
-        validate_not_null('site_id', page.site.id)
-        resp = self._request('POST', f'/sites/{page.site.id}/pages/', json=page.to_json())
+        resp = self._request('POST', f'/pages/', json=page.to_json())
         page.id = resp.json()['id']
 
-    def create_site(self, site: Site):
-        resp = self._request('POST', '/sites/', json=site.to_json())
-        site.id = resp.json()['id']
-
     def create_dataframe(self, dataframe: DataFrame):
-        resp = self._request('POST', '/dataframes/')
-        dataframe.id = resp.json()['id']
+        # resp = self._request('POST', '/dataframes/')
+        # dataframe.id = resp.json()['id']
         stream = io.StringIO()
         dataframe.df.to_csv(stream)
         files = {'file': ('dataframe.csv', stream)}
-        self._request('POST', f'/dataframes/{dataframe.id}', files=files)
+        self._request('POST', f'/dataframes/', files=files)
 
     def update_page(self, page: Page):
-        validate_not_null('site_id', page.site.id)
         validate_not_null('id', page.id)
-        self._request('PUT', f'/sites/{page.site.id}/pages/{page.id}', json=page.to_json())
-
-    def update_site(self, site: Site):
-        validate_not_null('id', site.id)
-        self._request('PUT', f'/sites/{site.id}', json=site.to_json())
+        self._request('PUT', f'/pages/{page.id}', json=page.to_json())
 
     def update_dataframe(self, dataframe: DataFrame):
         validate_not_null('id', dataframe.id)
@@ -81,12 +71,6 @@ class ApiClient(object):
             self.update_page(page)
         else:
             self.create_page(page)
-
-    def create_or_update_site(self, site: Site):
-        if site.id is not None:
-            self.update_site(site)
-        else:
-            self.create_site(site)
 
     def create_or_update_dataframe(self, dataframe: DataFrame):
         if dataframe.id is not None:
