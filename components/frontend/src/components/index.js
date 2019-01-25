@@ -15,7 +15,7 @@ class App extends Component {
       this.props.actions.getData(pageId);
     } else {
       axios.get('api/pages/').then((res) => {
-        this.setState({ pages: res.data.map((d) => d.id) });
+        this.setState({ pages: res.data });
       });
     }
   }
@@ -23,6 +23,7 @@ class App extends Component {
     const { data } = this.props;
     const { pages } = this.state;
     const pageId = this.props.match.params.pageId;
+    console.log(pages);
     return (
       <div className='app-container'>
         <Link to='/'>
@@ -33,8 +34,8 @@ class App extends Component {
           <div className='content-container'>
             {pages.map((page) => {
               return (
-                <div className='link-row' key={page}>
-                  <Link to={`/${page}`}>{page}</Link>
+                <div className='link-row' key={page.id}>
+                  <Link to={`/${page.id}`}>{page.title || page.id}</Link>
                 </div>
               );
             })}

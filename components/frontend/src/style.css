@@ -79,9 +79,6 @@
   text-decoration: none;
   font-size: 40px;
 }
-.app-container .content-container .link-row a:before {
-  content: 'pg ';
-}
 .app-container .content-container .link-row a:visited,
 .app-container .content-container .link-row a:active {
   color: inherit;
