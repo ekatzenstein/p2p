@@ -8,7 +8,7 @@ def build_app():
     app = Flask(__name__)
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
     # TODO: Connect to actual DB through variables
-    app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:////tmp/test.db'
+    app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:////sqllite-db/p2p.db'
     # TODO: externalize these parameters
     app.config['UPLOAD_DIRECTORY'] = '/tmp'
     app.config['MINIO_ENDPOINT'] = 'compose-minio:9000'
