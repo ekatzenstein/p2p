@@ -5,9 +5,15 @@ import './style.css';
 
 export default function P2PBaseComponent(props) {
   console.log(props);
+  const { groups } = props;
+  const newGroups = groups.map(group => {
+    const { render_type, ...rest } = group;
+    return { renderType: render_type, ...rest };
+  });
+  console.log(newGroups);
   return (
     <div className='app-container'>
-      <Chart data={d3.csvParse(props.data)} group={props.group} />
+      <Chart group={newGroups} />
     </div>
   );
 }
