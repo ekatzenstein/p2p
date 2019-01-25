@@ -23,8 +23,9 @@ def print_json(obj):
 class ApiClient(object):
     """API Client"""
 
-    def __init__(self, api_base_url: str):
+    def __init__(self, api_base_url: str, verbose: bool = False):
         self._api_base_url = api_base_url.rstrip('/')
+        self._verbose = verbose
 
     def _request(self, method: str, path: str, **kwargs):
         url = '{}/{}'.format(
@@ -36,11 +37,12 @@ class ApiClient(object):
             url,
             **kwargs,
         )
-        print('Request:')
-        print(method + ' ' + url)
-        print_json(resp.request.body)
-        print('Response:')
-        print_json(resp.content)
+        if self._verbose:
+            print('Request:')
+            print(method + ' ' + url)
+            print_json(resp.request.body)
+            print('Response:')
+            print_json(resp.content)
         return resp
 
     def create_page(self, page: Page):
