@@ -44,16 +44,17 @@ class ApiClient(object):
         return resp
 
     def create_page(self, page: Page):
-        resp = self._request('POST', f'/pages/', json=page.to_json())
-        page.id = resp.json()['id']
+        resp = self._request('POST', f'/pages/', json=page.to_json()).json()
+        page.id = resp['id']
 
     def create_dataframe(self, dataframe: DataFrame):
-        # resp = self._request('POST', '/dataframes/')
-        # dataframe.id = resp.json()['id']
         stream = io.StringIO()
         dataframe.to_csv(stream)
         files = {'file': ('dataframe.csv', stream)}
-        self._request('POST', f'/dataframes/', files=files)
+        resp = self._request('POST', f'/dataframes/', files=files).json()
+        dataframe.id = resp['id']
+        dataframe.digest = resp['digest']
+        dataframe.url = resp['url']
 
     def update_page(self, page: Page):
         validate_not_null('id', page.id)
