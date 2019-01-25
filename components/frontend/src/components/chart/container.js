@@ -173,7 +173,7 @@ class ChartContainer extends React.Component {
         return (
           <ScatterPlot
             {...item}
-            data={this.props.data.df1 || this.props.data || []}
+            data={item.data || this.props.data.df1 || this.props.data || []}
             key={index}
           />
         );
@@ -181,7 +181,7 @@ class ChartContainer extends React.Component {
         return (
           <Histogram
             {...item}
-            data={this.props.data.df2 || this.props.data || []}
+            data={item.data || this.props.data.df2 || this.props.data || []}
             key={index}
           />
         );

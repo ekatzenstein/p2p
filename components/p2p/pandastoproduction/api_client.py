@@ -51,7 +51,7 @@ class ApiClient(object):
         # resp = self._request('POST', '/dataframes/')
         # dataframe.id = resp.json()['id']
         stream = io.StringIO()
-        dataframe.df.to_csv(stream)
+        dataframe.to_csv(stream)
         files = {'file': ('dataframe.csv', stream)}
         self._request('POST', f'/dataframes/', files=files)
 
