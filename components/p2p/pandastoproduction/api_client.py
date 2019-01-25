@@ -66,7 +66,7 @@ class ApiClient(object):
         validate_not_null('id', dataframe.id)
         stream = io.StringIO()
         dataframe.df.to_csv(stream)
-        files = {'file': ('dataframe.csv', stream)}
+        files = {'file': ('dataframe.csv', stream.getvalue())}
         self._request('PUT', f'/dataframes/{dataframe.id}', files=files)
 
     def create_or_update_page(self, page: Page):
