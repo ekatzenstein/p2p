@@ -160,7 +160,8 @@
 .enigma-chart-container svg text {
   font-family: 'Chronicle Display', serif;
 }
-.enigma-chart-container svg circle:hover {
+.enigma-chart-container svg circle:hover,
+.enigma-chart-container svg rect:hover {
   cursor: pointer;
 }
 body {

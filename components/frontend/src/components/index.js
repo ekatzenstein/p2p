@@ -44,7 +44,7 @@ const groups = [
   // },
   [
     {
-      data: 'Hack Week 2019',
+      data: 'Hack Weekjn 2019',
       renderType: 'title'
     },
     {
