@@ -1,6 +1,7 @@
 .app-container {
   display: flex;
   justify-content: center;
+  flex-wrap: wrap;
   max-width: 100vw;
 }
 .app-container h1,
@@ -25,6 +26,8 @@
   border-bottom: 1px solid #ccc;
 }
 .app-container .content-container {
+  margin: 20px;
+  padding: 20px;
   box-shadow: 0 0px 20px 0 rgba(0,0,0,0.09);
   min-height: 100vh;
   max-width: 1200px;
@@ -48,13 +51,60 @@
 .app-container .content-container p {
   max-width: 900px;
   padding: 40px 0;
-  border-bottom: 2px dotted #000;
   margin: 0;
+  font-size: 18px;
+}
+.group-divider {
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  max-width: 900px;
+  overflow: visible;
+  border-top: 2px dotted #000;
+  border-bottom: 2px dotted #000;
+}
+.svg-container {
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  max-width: 900px;
+  overflow: visible;
+}
+.svg-container .options {
+  width: 100%;
+  display: flex;
+  justify-content: flex-start;
+  margin-bottom: 10px;
+}
+.svg-container .options .option-label {
+  margin-right: 10px;
+  opacity: 0.5;
+}
+.svg-container .options .option {
+  padding: 0px 5px;
+  margin: 0 5px;
+  max-width: 100px;
+  min-width: 40px;
+  text-align: center;
+  transition: all 400ms ease 0ms;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.svg-container .options .option:hover,
+.svg-container .options .option.active {
+  cursor: pointer;
+  background: #f2f2f2;
 }
 .enigma-chart-container {
   height: 500px;
   width: 100%;
   position: relative;
+}
+.enigma-chart-container svg {
+  overflow: visible;
 }
 .enigma-chart-container svg .grid-axis line,
 .enigma-chart-container svg .grid-axis path {

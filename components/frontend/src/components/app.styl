@@ -1,6 +1,7 @@
 .app-container {
   display: flex;
   justify-content: center;
+  flex-wrap: wrap;
   max-width: 100vw;
 
   h1, h2 {
@@ -27,6 +28,11 @@
   }
 
   .content-container {
+    // border-top: divider;
+    // border-bottom: divider;
+    margin: gutter;
+    padding: gutter;
+
     .header-content {
       max-width: max-width-sub;
       width: 100%;
@@ -52,8 +58,9 @@
     p {
       max-width: max-width-sub;
       padding: (gutter * 2) 0;
-      border-bottom: divider;
+      // border-bottom: divider;
       margin: 0;
+      font-size: 18px;
       // padding: (gutter / 2);
       // background: accent;
       // round();

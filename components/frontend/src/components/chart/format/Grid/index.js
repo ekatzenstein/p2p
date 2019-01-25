@@ -8,8 +8,12 @@ const Grid = (props) => {
     w,
     h,
     orientation,
-    ticks
+    ticks,
+    chartType,
+    yScaleHisto
   } = props;
+
+  const yy = chartType === 'histogram' ? yScaleHisto : y;
 
   return (
     <g>
@@ -20,7 +24,7 @@ const Grid = (props) => {
           ref={(g) =>
             d3.select(g).call(
               d3
-                .axisLeft(y)
+                .axisLeft(yy)
                 .ticks(ticks * 2)
                 .tickSize(-(w - left))
                 .tickFormat('')
