@@ -7,8 +7,16 @@ export default function P2PBaseComponent(props) {
   console.log(props);
   const { groups } = props;
   const newGroups = groups.map(group => {
-    const { render_type, ...rest } = group;
-    return { renderType: render_type, ...rest };
+    const { render_type, data, ...rest } = group;
+    let newData = data;
+    if(['boxplot', 'scatter', 'histogram'].indexOf(render_type) != -1) {
+      newData = d3.csvParse(data);
+    }
+    return {
+      renderType: render_type,
+      data: newData,
+      ...rest
+    };
   });
   console.log(newGroups);
   return (
