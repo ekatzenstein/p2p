@@ -9,10 +9,16 @@ const Axis = (props) => {
     h,
     orientation,
     ticks,
-    name
+    name,
+    chartType,
+    bins,
+    yScaleHisto
   } = props;
 
   const labelOffset = 55;
+
+  const t = chartType === 'scatter' ? ticks : bins;
+  const yy = chartType === 'histogram' ? yScaleHisto : y;
 
   return (
     <g>
@@ -22,8 +28,8 @@ const Axis = (props) => {
             ref={(g) =>
               d3.select(g).call(
                 d3
-                  .axisLeft(y)
-                  .ticks(ticks)
+                  .axisLeft(yy)
+                  .ticks(t)
                   .tickFormat(d3.format('.2s'))
               )
             }
@@ -36,7 +42,7 @@ const Axis = (props) => {
               textAnchor='end'
               transform='rotate(-90)'
             >
-              {name}
+              {chartType !== 'histogram' && name}
             </text>
           </g>
         </g>
@@ -60,7 +66,7 @@ const Axis = (props) => {
               dy={labelOffset}
               textAnchor='end'
             >
-              {name}
+              {chartType === 'scatter' && name}
             </text>
           </g>
         </g>

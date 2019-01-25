@@ -1,3 +1,50 @@
+.group-divider {
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  max-width: max-width-sub;
+  overflow: visible;
+  border-top: divider;
+  border-bottom: divider;
+}
+
+.svg-container {
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  max-width: max-width-sub;
+  overflow: visible;
+
+  .options {
+    width: 100%;
+    display: flex;
+    justify-content: flex-start;
+    margin-bottom: 10px;
+
+    .option-label {
+      margin-right: 10px;
+      opacity: 0.5;
+    }
+
+    .option {
+      padding: 0px 5px;
+      margin: 0 5px;
+      max-width: 100px;
+      min-width: 40px;
+      text-align: center;
+      transition();
+      ellipsis();
+
+      &:hover, &.active {
+        cursor: pointer;
+        background: rgb(95%, 95%, 95%);
+      }
+    }
+  }
+}
+
 .enigma-chart-container {
   height: 500px;
   width: 100%;
@@ -6,6 +53,8 @@
   // margin-bottom: gutter;
   svg {
     // background: yellow;
+    overflow: visible;
+
     .grid-axis {
       grid-brightness = 90%;
 
@@ -16,6 +65,10 @@
 
     text {
       font-family: chronicle;
+    }
+
+    circle {
+      // transition();
     }
 
     .scatter-plot {

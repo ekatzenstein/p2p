@@ -16,11 +16,16 @@ export const fetchRisks = () => {
 
 export const getData = () => {
   return (dispatch) => {
-    d3.csv('/data/data.csv').then((data, err) => {
-      dispatch({
-        type: constants.GET_DATA,
-        data
-      });
-    });
+    Promise.all([d3.csv('/data/data.csv'), d3.csv('/data/truncated.csv')]).then(
+      (data, err) => {
+        dispatch({
+          type: constants.GET_DATA,
+          data: {
+            df1: data[0],
+            df2: data[1]
+          }
+        });
+      }
+    );
   };
 };
