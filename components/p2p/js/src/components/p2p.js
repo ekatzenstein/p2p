@@ -4,12 +4,11 @@ import * as d3 from 'd3';
 import './style.css';
 
 export default function P2PBaseComponent(props) {
-  console.log(props);
   const { groups } = props;
-  const newGroups = groups.map(group => {
+  const newGroups = groups.map((group) => {
     const { render_type, data, ...rest } = group;
     let newData = data;
-    if(['boxplot', 'scatter', 'histogram'].indexOf(render_type) != -1) {
+    if (['boxplot', 'scatter', 'histogram'].indexOf(render_type) != -1) {
       newData = d3.csvParse(data);
     }
     return {
@@ -18,7 +17,6 @@ export default function P2PBaseComponent(props) {
       ...rest
     };
   });
-  console.log(newGroups);
   return (
     <div className='app-container'>
       <Chart group={newGroups} />

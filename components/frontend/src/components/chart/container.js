@@ -231,7 +231,6 @@ class ChartContainer extends React.Component {
           {/* <img src='/img/logo.svg' height='60px' /> */}
         </div>
         {this.props.group.map((item, i) => {
-          console.log('rerender');
           return this.getItem(item, i);
         })}
       </div>
