@@ -29,6 +29,7 @@ compose-down: ## Stop the docker-compose stack.
 build-whl: ## Build the p2p library.
 	@printf -- "Building wheel: $(P2P_WHL)\n"
 	cp -r components/frontend/src/components/chart components/p2p/js/src/components/
+	cp -r components/frontend/src/assets components/p2p/js/src/components/
 	cp components/frontend/src/style.css components/p2p/js/src/components/
 	docker build -f components/p2p/Dockerfile -t $(P2P_BUILDER_IMAGE) components/p2p
 	docker run --rm -v $(PWD)/dist:/dist $(P2P_BUILDER_IMAGE)
