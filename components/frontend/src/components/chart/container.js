@@ -194,7 +194,8 @@ class ChartContainer extends React.Component {
     // }
   };
   getItem = (item, index) => {
-    switch (item.render_type) {
+    const rType = item.render_type || item.renderType;
+    switch (rType) {
       case 'scatter':
         return (
           <ScatterPlot
