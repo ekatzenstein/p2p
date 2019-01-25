@@ -23,9 +23,9 @@ class PageContent(object):
     def to_json(self, include_df=False, **kwargs):
         obj = self.__dict__.copy()
         obj["render_type"] = self.render_type
-        for key in obj:
-            if obj[key] is None:
-                obj.pop(key, None)
+        keys_to_remove = [key for key in obj if obj[key] is None]
+        for key in keys_to_remove:
+            obj.pop(key, None)
         return obj
 
 
@@ -40,9 +40,9 @@ class _TextContent(PageContent):
     def to_json(self, **kwargs):
         obj = self.__dict__.copy()
         obj["render_type"] = self.render_type
-        for key in obj:
-            if obj[key] is None:
-                obj.pop(key, None)
+        keys_to_remove = [key for key in obj if obj[key] is None]
+        for key in keys_to_remove:
+            obj.pop(key, None)
         return obj
 
 
@@ -74,9 +74,9 @@ class _ChartContent(PageContent):
         obj.pop('dataframe', None)
         if include_df:
             obj['data'] = self.dataframe.to_csv()
-        for key in obj:
-            if obj[key] is None:
-                obj.pop(key, None)
+        keys_to_remove = [key for key in obj if obj[key] is None]
+        for key in keys_to_remove:
+            obj.pop(key, None)
         return obj
 
 
@@ -111,9 +111,12 @@ class Page(Component):
         return f'Page: title="{self.title}" content={self.content} id={self.id}'
 
     def to_json(self, **kwargs):
-        obj = self.__dict__.copy()
-        obj['content'] = [c.to_json() for c in self.content]
-        for key in obj:
-            if obj[key] is None:
-                obj.pop(key, None)
+        obj = {
+            'title': self.title,
+            'content': json.dumps([c.to_json() for c in self.content]),
+            'id': self.id,
+        }
+        keys_to_remove = [key for key in obj if obj[key] is None]
+        for key in keys_to_remove:
+            obj.pop(key, None)
         return obj
