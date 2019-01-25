@@ -3,11 +3,14 @@ import os
 from blueprints import (dataframe, page)
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
+from flask_cors import CORS
 
 from models.models import db
 
 def build_app():
     app = Flask(__name__)
+    CORS(app)
+
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
     app.config['SQLALCHEMY_DATABASE_URI'] = f"sqlite:////{os.environ.get('SQLLITE_DIR', '/tmp')}/p2p.db"
     # TODO: externalize these parameters
