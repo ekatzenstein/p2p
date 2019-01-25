@@ -1,3 +1,21 @@
+@font-face {
+  font-family: 'Chronicle Display';
+  font-weight: 400;
+  src: url("./assets/fonts/ChronicleDisplay-Roman.woff2") format('woff2');
+  src: url("./assets/fonts/ChronicleDisplay-Roman.woff") format('woff');
+}
+@font-face {
+  font-family: 'Lab Grotesque';
+  font-weight: 400;
+  src: url("./assets/fonts/LabGrotesque-Regular.woff2") format('woff2');
+  src: url("./assets/fonts/LabGrotesque-Regular.woff") format('woff');
+}
+@font-face {
+  font-family: 'Lab Grotesque';
+  font-weight: 200;
+  src: url("./assets/fonts/LabGrotesque-Light.woff2") format('woff2');
+  src: url("./assets/fonts/LabGrotesque-Light.woff") format('woff');
+}
 .app-container {
   display: flex;
   justify-content: center;
