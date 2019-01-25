@@ -20,7 +20,7 @@ class PageContent(object):
     def __str__(self):
         return f'PageContent: type={self.render_type}'
 
-    def to_json(self, include_df=False, **kwargs):
+    def to_json(self, **kwargs):
         obj = self.__dict__.copy()
         obj["render_type"] = self.render_type
         keys_to_remove = [key for key in obj if obj[key] is None]
@@ -68,11 +68,14 @@ class _ChartContent(PageContent):
             self.dataframe = dataframe
         self.__dict__.update(kwargs)
 
-    def to_json(self, include_df=False, **kwargs):
+    def to_json(self, include_csv=False, include_df=False, **kwargs):
         obj = self.__dict__.copy()
         obj["render_type"] = self.render_type
-        obj.pop('dataframe', None)
         if include_df:
+            obj['dataframe'] = self.dataframe.to_json()
+        else:
+            obj.pop('dataframe', None)
+        if include_csv:
             obj['data'] = self.dataframe.to_csv()
         keys_to_remove = [key for key in obj if obj[key] is None]
         for key in keys_to_remove:
@@ -101,7 +104,7 @@ class Page(Component):
         self.title = title
         self.content = content
         self.id = None
-        super().__init__(target_name='p2p', props={'groups': [c.to_json(include_df=True) for c in self.content]})
+        super().__init__(target_name='p2p', props={'groups': [c.to_json(include_csv=True) for c in self.content]})
         self.on_msg(self._handle_msg)
 
     def _handle_msg(self, msg):
@@ -113,7 +116,7 @@ class Page(Component):
     def to_json(self, **kwargs):
         obj = {
             'title': self.title,
-            'content': json.dumps([c.to_json() for c in self.content]),
+            'content': json.dumps([c.to_json(include_df=True) for c in self.content]),
             'id': self.id,
         }
         keys_to_remove = [key for key in obj if obj[key] is None]
