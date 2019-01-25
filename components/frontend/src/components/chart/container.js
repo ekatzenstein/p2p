@@ -194,12 +194,12 @@ class ChartContainer extends React.Component {
     // }
   };
   getItem = (item, index) => {
-    switch (item.renderType) {
+    switch (item.render_type) {
       case 'scatter':
         return (
           <ScatterPlot
             {...item}
-            data={item.data || this.props.data.df1 || this.props.data || []}
+            data={item.data || this.props.data || []}
             key={index}
             handleHover={this.handleHoverScatter}
           />
@@ -208,7 +208,7 @@ class ChartContainer extends React.Component {
         return (
           <Histogram
             {...item}
-            data={item.data || this.props.data.df2 || this.props.data || []}
+            data={item.data || this.props.data || []}
             key={index}
             handleHover={this.handleHoverScatter}
           />
@@ -227,9 +227,7 @@ class ChartContainer extends React.Component {
     return (
       <div className='content-container'>
         {/* {this.state.tooltip.content && <Tooltip {...this.state.tooltip} />} */}
-        <div className='header-content'>
-          {/* <img src='/img/logo.svg' height='60px' /> */}
-        </div>
+        <div className='header-content' />
         {this.props.group.map((item, i) => {
           return this.getItem(item, i);
         })}

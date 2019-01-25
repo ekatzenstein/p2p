@@ -8,21 +8,26 @@ const api = axios.create({
   baseURL: 'api/'
 });
 
-export const getData = () => {
+export const getData = (id) => {
+  let content;
   return (dispatch) => {
-    Promise.all([d3.csv('/data/data.csv'), d3.csv('/data/truncated.csv')]).then(
-      (data, err) => {
-        api.get('pages/').then((res) => {
-          console.log(res);
-        });
+    api
+      .get(`pages/${id}`)
+      .then((res) => {
+        if (res.data) {
+          content = JSON.parse(res.data.content);
+          const promises = content.map((d) =>
+            d.data ? d.data : d3.csv(d.dataframe.url)
+          );
+          return Promise.all(promises);
+        }
+      })
+      .then((res) => {
+        const data = content.map((c, i) => ({ ...c, data: res[i] }));
         dispatch({
           type: constants.GET_DATA,
-          data: {
-            df1: data[0],
-            df2: data[1]
-          }
+          data
         });
-      }
-    );
+      });
   };
 };

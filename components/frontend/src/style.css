@@ -21,6 +21,14 @@
   justify-content: center;
   flex-wrap: wrap;
   max-width: 100vw;
+  padding-bottom: 40px;
+}
+.app-container a {
+  min-width: 100%;
+  margin: 40px 0 20px;
+}
+.app-container a img {
+  min-width: 100%;
 }
 .app-container h1,
 .app-container h2 {
@@ -57,6 +65,26 @@
   flex-wrap: wrap;
   padding-bottom: 100px;
   padding-top: 20px;
+}
+.app-container .content-container .link-row {
+  width: 100%;
+  text-align: center;
+  margin: 6.666666666666667px 0;
+  font-family: 'Chronicle Display', serif;
+}
+.app-container .content-container .link-row:first-child {
+  margin-top: 40px;
+}
+.app-container .content-container .link-row a {
+  text-decoration: none;
+  font-size: 40px;
+}
+.app-container .content-container .link-row a:before {
+  content: 'pg ';
+}
+.app-container .content-container .link-row a:visited,
+.app-container .content-container .link-row a:active {
+  color: inherit;
 }
 .app-container .content-container .header-content {
   max-width: 900px;
