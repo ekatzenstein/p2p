@@ -13,5 +13,7 @@ RUN pip install -r requirements.txt
 
 COPY . .
 
+ENV SQLLITE_DIR=/sqllite-db/
+
 EXPOSE 5000
 CMD ["python", "-B", "src/app.py"]

@@ -17,5 +17,8 @@ class DataFrame(object):
     def id(self):
         return self._id
 
+    def to_csv(self, **kwargs):
+        return self._df.to_csv(**kwargs, index=False)
+
     def __str__(self):
         return f'DataFrame: {self._df}'
