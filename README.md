@@ -12,7 +12,7 @@ Create charts that can be displayed using the same React components both in Jupy
 
 1. Install `docker` and `docker-compose`.
 
-1. Build and start the stack.
+1. Build and start the stack. If the make fails, run `docker system prune -f` to free up allocated docker disk space.
 
    ```bash
    make all
